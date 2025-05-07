@@ -1,4 +1,6 @@
 #include <SFML/Graphics.hpp>
+#include <bits/stdc++.h>
+#include <unordered_map>
 #include <iostream>
 #include <vector>
 #include <sstream>
