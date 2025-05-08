@@ -1,5 +1,5 @@
 #include <SFML/Graphics.hpp>
-#include <bits/stdc++.h>
+#include<Bits.h>
 #include <unordered_map>
 #include <iostream>
 using namespace std;
