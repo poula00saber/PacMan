@@ -10,21 +10,14 @@ public:
 
     void movement();
     void draw(RenderWindow& window);
-    Vector2i getGridPosition();
-    bool canMove(Vector2i dir);
-    void updateAnimation();
-    void handleInput();
+    int i, j;
+    Sprite pacsprite;
 
 public:
     int status;
     Texture pactexture;
-    Sprite pacsprite;
     int frame;
     float speed;
-    Vector2i direction;
-    Clock animationClock;
-    float animationSpeed;
-
-
+    int restframe;
     Graph g;
 };
