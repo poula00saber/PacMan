@@ -386,7 +386,101 @@ int instruction(RenderWindow& window)
     }
 }
 
+void select_checkMouseHover(RenderWindow& window, Sprite difficulty[], int numphoto, int& selectedOption) {
+    bool check = 0;
+    for (int i = 0; i < 3; i++)
+    {
+        if (difficulty[i].getGlobalBounds().contains(window.mapPixelToCoords(Mouse::getPosition(window))))
+        {
+            selectedOption = i;
+            check = 1;
+        }
+    }
+    if (check == 0)
+    {
+        selectedOption = -1;
+    }
+}
+int SelectDifficulty(RenderWindow& window) {
+    int selectedOption = -1;
+    Texture background;
+    Sprite bg;
+    background.loadFromFile("Assets/images/select difficulty.png");
+    bg.setTexture(background);
+    bg.setScale(1.9, 1);
+    bg.setPosition(0, 0);
+
+    Texture difficulty[3];
+    Sprite df[3];
+    difficulty[0].loadFromFile("Assets/images/select easy.png");
+    difficulty[1].loadFromFile("Assets/images/select medium.png");
+    difficulty[2].loadFromFile("Assets/images/select hard.png");
+
+    for (int i = 0; i < 3; i++)
+    {
+        df[i].setTexture(difficulty[i]);
+    }
+
+    while (window.isOpen())
+    {
+        Event event;
+        while (window.pollEvent(event))
+        {
+            if (event.type == Event::Closed)
+            {
+                window.close();
+            }
+
+            if (Keyboard::isKeyPressed(Keyboard::Escape))
+            {
+                return 1000;
+            }
+
+            if (event.type == Event::MouseMoved)
+            {
+                select_checkMouseHover(window, df, 3, selectedOption);
+            }
+
+            if (event.type == Event::MouseButtonPressed) {
+                if (event.mouseButton.button == Mouse::Left)
+                {
+                    if (selectedOption != -1)
+                    {
+                        return selectedOption;
+
+                    }
+                }
+            }
+        }
+
+        window.clear();
+        window.draw(bg);
+
+        for (int i = 0; i < 3; i++)
+        {
+            if (selectedOption == i)
+            {
+                df[i].setScale(1.2f, 1.2f);
+                df[i].setPosition(400 * i + 400 - 20, 550 - 20);
+                df[i].setColor(i == 0 ? Color::Green : (i == 1 ? Color::Yellow : Color::Red));
+            }
+            else
+            {
+                df[i].setScale(1.f, 1.f);
+                df[i].setColor(Color::White);
+                df[i].setPosition(400 * i + 400, 550);
+            }
+
+            window.draw(df[i]);
+        }
+
+        window.display();
+    }
+}
+
+
 int Game_Play(RenderWindow& window) {
+	int x = SelectDifficulty(window);
     Graph g;
     int row = g.pacmanMatrix.size();
     int col = g.pacmanMatrix[0].size();
