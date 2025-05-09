@@ -496,10 +496,15 @@ int Game_Play(RenderWindow& window) {
             {
                 window.close();
             }
-            /*  if (Keyboard::isKeyPressed(Keyboard::Enter))
-              {
-
-              }*/
+            if (Keyboard::isKeyPressed(Keyboard::Enter))
+            {
+                cout << "x player  \n" << player.pacsprite.getPosition().x << "       " << player.pacsprite.getPosition().y << endl;
+                cout << "X  \n" << Graph::nodesInfo[player.i * Graph::COLS + player.j].XstartPoint << "  " << Graph::nodesInfo[player.i * Graph::COLS + player.j].Xcenter
+                    << "   " << Graph::nodesInfo[player.i * Graph::COLS + player.j].XendPoint << endl;
+                cout << " Y  \n";
+                cout << Graph::nodesInfo[player.i * Graph::COLS + player.j].YstartPoint << "  " << Graph::nodesInfo[player.i * Graph::COLS + player.j].Ycenter
+                    << "   " << Graph::nodesInfo[player.i * Graph::COLS + player.j].YendPoint << endl;
+            }
             if (Keyboard::isKeyPressed(Keyboard::Escape))
             {
                 return 1000;   //Return to menu
@@ -509,8 +514,8 @@ int Game_Play(RenderWindow& window) {
 
         window.clear();
 
-        player.movement();  // ÍÑßÉ ÈÇß ãÇä
-        player.draw(window); // ÚÑÖ ÈÇß ãÇä
+        player.movement();  // ???? ??? ???
+        player.draw(window); // ??? ??? ???
 
         window.display();
     }

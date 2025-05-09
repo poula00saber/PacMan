@@ -1,5 +1,5 @@
 #include <SFML/Graphics.hpp>
-#include<Bits.h>
+#include <bits/stdc++.h>
 #include <unordered_map>
 #include <iostream>
 using namespace std;
@@ -12,42 +12,22 @@ public:
 		int x, y;
 	};
 	Graph();
-	static const int mapCells = 20;
+	static const int ROWS = 22;
+	static const int COLS = 40;
+	static const int NODESIZE = 48;
+
 	static unordered_map<int, vector<int>> graph;
 	static unordered_map<int, Node>nodesInfo;
-	vector<vector<int>> pacmanMatrix = {
-	   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-	   {0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,0},
-	   {0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,0},
-	   {0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,0},
-	   {0,1,1,1,1,1,0,1,1,1,1,1,0,1,1,1,1,1,1,0},
-	   {0,1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,1,0},
-	   {0,1,1,1,0,1,1,1,0,1,0,1,1,1,0,1,1,1,1,0},
-	   {0,0,0,1,0,0,0,1,0,1,0,1,0,0,0,1,0,0,1,0},
-	   {0,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,0},
-	   {0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0},
-	   {0,1,1,1,0,1,1,1,0,1,0,1,1,1,0,1,1,1,1,0},
-	   {0,0,0,1,0,1,0,0,0,1,0,1,0,0,0,1,0,0,1,0},
-	   {0,1,1,1,1,1,0,1,1,1,1,1,0,1,1,1,1,1,1,0},
-	   {0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,0},
-	   {0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,0},
-	   {0,1,1,1,0,1,1,1,0,1,0,1,1,1,0,1,1,1,1,0},
-	   {0,1,0,0,0,1,0,0,0,1,0,1,0,0,0,1,0,0,0,0},
-	   {0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,0},
-	   {0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0},
-	   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
-	};
+	static vector<vector<int>> pacmanMatrix;
 
 
 
 	static Node ConstructNode(int i, int j, int nodeSize);
 
-	static unordered_map<int, vector<int>> constructGraph(std::vector<std::vector<int>>& pacmanMatrix, int nodeSize = 90);\
+	static unordered_map<int, vector<int>> constructGraph(std::vector<std::vector<int>>& pacmanMatrix, int nodeSize = NODESIZE);
 
 	static vector<int> bfs(int start, int target);
 
 	static vector<int> ReconstructPath(std::vector<int>& parent, int start, int target);
 
 };
-
-
