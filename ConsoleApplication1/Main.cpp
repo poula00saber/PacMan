@@ -22,6 +22,7 @@
 #include<SFML/Graphics.hpp>
 #include<SFML/Audio.hpp>
 #include<Windows.h>
+#include"Level1_Map.h"
 #include"Menu.h"
 #include"SoundManager.h"
 //#include "Graph.h"
@@ -488,9 +489,12 @@ int Game_Play(RenderWindow& window) {
     int x = SelectDifficulty(window);
 
     pacman player;
+    Level1_Map map;
 
     while (window.isOpen()) {
         Event event;
+
+
         while (window.pollEvent(event)) {
             if (event.type == Event::Closed)
             {
@@ -514,76 +518,12 @@ int Game_Play(RenderWindow& window) {
 
         window.clear();
 
-        player.movement();  // ???? ??? ???
-        player.draw(window); // ??? ??? ???
+        player.movement();
+
+        map.drawMap(window);
+        player.draw(window);
 
         window.display();
     }
-
-    //Graph g;
-    //int row = g.pacmanMatrix.size();
-    //int col = g.pacmanMatrix[0].size();
-    //for (int i = 0; i < row; i++)
-    //{
-    //    for (int j = 0; j < col; j++)
-    //    {
-    //        int x = i * col + j;
-    //        if (x < 10)
-    //        {
-    //            cout << x << "   ";
-    //            continue;
-    //        }
-    //        if (x < 100)
-    //        {
-    //            cout << x << "  ";
-    //            continue;
-    //        }
-    //        if (x < 1000)
-    //        {
-    //            cout << x << " ";
-    //            continue;
-    //        }
-
-
-    //    }
-    //    cout << endl;
-    //}
-    //cout << endl;
-    //cout << endl;
-
-
-
-    //for (int i = 0; i < row; i++)
-    //{
-    //    for (int j = 0; j < col; j++)
-    //    {
-    //        int x = g.pacmanMatrix[i][j];
-    //        if (x < 10)
-    //        {
-    //            cout << x << "   ";
-    //            continue;
-    //        }
-    //        if (x < 100)
-    //        {
-    //            cout << x << "  ";
-    //            continue;
-    //        }
-    //        if (x < 1000)
-    //        {
-    //            cout << x << " ";
-    //            continue;
-    //        }
-
-
-    //    }
-    //    cout << endl;
-    //}
-    //vector<int> path = Graph::bfs(22, 25);
-
-    //cout << path.size() << endl << endl << endl << endl;
-    //for (int i = 0; i < path.size(); i++)
-    //{
-    //    cout << path[i] << " ";
-    //}
-    //return 1000;
 }
+    

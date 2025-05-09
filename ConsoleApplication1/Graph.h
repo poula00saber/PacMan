@@ -1,7 +1,7 @@
 #include <SFML/Graphics.hpp>
-#include <bits/stdc++.h>
 #include <unordered_map>
 #include <iostream>
+#pragma once
 using namespace std;
 
 class Graph
