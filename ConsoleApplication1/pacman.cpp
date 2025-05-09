@@ -2,11 +2,11 @@
 #include <SFML/Window/Keyboard.hpp>
 
 pacman::pacman() {
-    pactexture.loadFromFile("PacMan16.png");
+    pactexture.loadFromFile("Assets/Texture/PacMan16.png");
     pacsprite.setTexture(pactexture);
-    pacsprite.setTextureRect(IntRect(0, 0, 16, 16));
+    pacsprite.setTextureRect(IntRect(4 * 16, 0, 16, 16));
     pacsprite.setScale(3, 3);
-    pacsprite.setPosition(90, 90); // »œ«Ì… „‰ √Ê· Œ«‰…
+    pacsprite.setPosition(90, 90);
     frame = 0;
     speed = 0.07f;
     animationSpeed = 0.1f;
@@ -32,27 +32,27 @@ void pacman::movement() {
     }
 
     if (status == 0 && g.pacmanMatrix[i][j + 1] != 0) {  // Right
-        frame = 0;
-        /* direction = {1, 0}; */
-            pacsprite.setTextureRect(IntRect((frame % 5) * 16, 0, 16, 16));
+        frame++;
+        //direction = { 1, 0 }; 
+        pacsprite.setTextureRect(IntRect((frame % 5) * 16, 0, 16, 16));
         pacsprite.move(speed, 0);
     }
     else if (status == 1 && g.pacmanMatrix[i][j - 1] != 0) {  // Left
-        frame = 1;
-        /* direction = { -1, 0 };*/
-        pacsprite.setTextureRect(IntRect((frame % 5) * 16, 0, 16, 16));
+        frame++;
+        //direction = { -1, 0 };
+        pacsprite.setTextureRect(IntRect((frame % 5) * 16, 2 * 16, 16, 16));
         pacsprite.move(-speed, 0);
     }
     else if (status == 2 && g.pacmanMatrix[i - 1][j] != 0) {  // Up
-        frame = 2;
+        frame++;
         direction = { 0, -1 };
-        pacsprite.setTextureRect(IntRect((frame % 5) * 16, 0, 16, 16));
+        pacsprite.setTextureRect(IntRect((frame % 5) * 16, 16, 16, 16));
         pacsprite.move(0, -speed);
     }
     else if (status == 3 && g.pacmanMatrix[i + 1][j] != 0) {  // Down
-        frame = 3;
+        frame++;
         direction = { 0, 1 };
-        pacsprite.setTextureRect(IntRect((frame % 5) * 16, 0, 16, 16));
+        pacsprite.setTextureRect(IntRect((frame % 5) * 16, 3 * 16, 16, 16));
         pacsprite.move(0, speed);
     }
 
@@ -73,5 +73,5 @@ void pacman::draw(RenderWindow& window) {
 //
 //
 //void pacman::handleInput() {
-//    // ·· Ê”⁄… ·«Õﬁ« ≈–« √—œ   ›’· «·≈œŒ«· ⁄‰ «·Õ—ﬂ…
+//    
 //}
