@@ -24,7 +24,8 @@
 #include<Windows.h>
 #include"Menu.h"
 #include"SoundManager.h"
-#include "Graph.h"
+//#include "Graph.h"
+#include "pacman.h"
 
 
 using namespace std;
@@ -49,6 +50,10 @@ int Game_Play(RenderWindow& window);
 void drawMenu(RenderWindow& window, Menu& menu, Sprite& bg);
 void handleEvents(RenderWindow& window, Menu& menu, int& pagenum);
 void numphoto_checkMouseHover(RenderWindow& window, RectangleShape numplay[], int& selectedOption);
+void select_checkMouseHover(RenderWindow& window, Sprite difficulty[], int& selectedOption);
+int SelectDifficulty(RenderWindow& window);
+
+
 
 RenderWindow window(VideoMode(1920, 1080), "Game", Style::Fullscreen);
 
@@ -480,78 +485,100 @@ int SelectDifficulty(RenderWindow& window) {
 
 
 int Game_Play(RenderWindow& window) {
-	int x = SelectDifficulty(window);
-    Graph g;
-    int row = g.pacmanMatrix.size();
-    int col = g.pacmanMatrix[0].size();
-    for (int i = 0; i < row; i++)
-    {
-        for (int j = 0; j < col; j++)
-        {
-            int x = i * col + j;
-            if (x < 10)
-            {
-                cout << x << "   ";
-                continue;
-            }
-            if (x < 100)
-            {
-                cout << x << "  ";
-                continue;
-            }
-            if (x < 1000)
-            {
-                cout << x << " ";
-                continue;
-            }
+    int x = SelectDifficulty(window);
 
+    pacman player;
+
+    while (window.isOpen()) {
+        Event event;
+        while (window.pollEvent(event)) {
+            if (event.type == Event::Closed)
+            {
+                window.close();
+            }
+            /*  if (Keyboard::isKeyPressed(Keyboard::Enter))
+              {
+
+              }*/
+            if (Keyboard::isKeyPressed(Keyboard::Escape))
+            {
+                return 1000;   //Return to menu
+            }
 
         }
-        cout << endl;
-    }
-    cout << endl;
-    cout << endl;
 
+        window.clear();
 
+        player.movement();  // ÍÑßÉ ÈÇß ãÇä
+        player.draw(window); // ÚÑÖ ÈÇß ãÇä
 
-    for (int i = 0; i < row; i++)
-    {
-        for (int j = 0; j < col; j++)
-        {
-            int x = g.pacmanMatrix[i][j];
-            if (x < 10)
-            {
-                cout << x << "   ";
-                continue;
-            }
-            if (x < 100)
-            {
-                cout << x << "  ";
-                continue;
-            }
-            if (x < 1000)
-            {
-                cout << x << " ";
-                continue;
-            }
-
-
-        }
-        cout << endl;
+        window.display();
     }
 
+    //Graph g;
+    //int row = g.pacmanMatrix.size();
+    //int col = g.pacmanMatrix[0].size();
+    //for (int i = 0; i < row; i++)
+    //{
+    //    for (int j = 0; j < col; j++)
+    //    {
+    //        int x = i * col + j;
+    //        if (x < 10)
+    //        {
+    //            cout << x << "   ";
+    //            continue;
+    //        }
+    //        if (x < 100)
+    //        {
+    //            cout << x << "  ";
+    //            continue;
+    //        }
+    //        if (x < 1000)
+    //        {
+    //            cout << x << " ";
+    //            continue;
+    //        }
+
+
+    //    }
+    //    cout << endl;
+    //}
+    //cout << endl;
+    //cout << endl;
 
 
 
+    //for (int i = 0; i < row; i++)
+    //{
+    //    for (int j = 0; j < col; j++)
+    //    {
+    //        int x = g.pacmanMatrix[i][j];
+    //        if (x < 10)
+    //        {
+    //            cout << x << "   ";
+    //            continue;
+    //        }
+    //        if (x < 100)
+    //        {
+    //            cout << x << "  ";
+    //            continue;
+    //        }
+    //        if (x < 1000)
+    //        {
+    //            cout << x << " ";
+    //            continue;
+    //        }
 
-    vector<int> path = Graph::bfs(22, 25);
 
-    cout << path.size() << endl << endl << endl << endl;
-    for (int i = 0; i < path.size(); i++)
-    {
-        cout << path[i] << " ";
-    }
-    return 1000;
+    //    }
+    //    cout << endl;
+    //}
+    //vector<int> path = Graph::bfs(22, 25);
+
+    //cout << path.size() << endl << endl << endl << endl;
+    //for (int i = 0; i < path.size(); i++)
+    //{
+    //    cout << path[i] << " ";
+    //}
+    //return 1000;
 }
-
-
