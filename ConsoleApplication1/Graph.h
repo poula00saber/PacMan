@@ -1,5 +1,12 @@
+#pragma once
 #include <SFML/Graphics.hpp>
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <map>
+#include <set>
+#include <string>
+#include <algorithm>
 #include <unordered_map>
 #include <iostream>
 using namespace std;
