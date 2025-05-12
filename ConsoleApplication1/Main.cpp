@@ -4,6 +4,7 @@
 #include<deque>
 #include<vector>
 #include<set>
+#include "Graph.h"
 #include<map>
 #include<unordered_map>
 #include<unordered_set>
@@ -17,14 +18,16 @@
 #include<iomanip>
 #include<fstream>
 #include<math.h>
-#include <iomanip>
+
 #include<SFML/Window/Event.hpp>
 #include<SFML/Graphics.hpp>
 #include<SFML/Audio.hpp>
 #include<Windows.h>
+#include"Map_Level.h"
 #include"Menu.h"
 #include"SoundManager.h"
-#include "Graph.h"
+#include"ghost.h";
+#include "pacman.h"
 
 
 using namespace std;
@@ -49,6 +52,10 @@ int Game_Play(RenderWindow& window);
 void drawMenu(RenderWindow& window, Menu& menu, Sprite& bg);
 void handleEvents(RenderWindow& window, Menu& menu, int& pagenum);
 void numphoto_checkMouseHover(RenderWindow& window, RectangleShape numplay[], int& selectedOption);
+void select_checkMouseHover(RenderWindow& window, Sprite difficulty[], int& selectedOption);
+int SelectDifficulty(RenderWindow& window);
+
+
 
 RenderWindow window(VideoMode(1920, 1080), "Game", Style::Fullscreen);
 
@@ -386,78 +393,144 @@ int instruction(RenderWindow& window)
     }
 }
 
-int Game_Play(RenderWindow& window) {
-    Graph g;
-    int row = g.pacmanMatrix.size();
-    int col = g.pacmanMatrix[0].size();
-    for (int i = 0; i < row; i++)
+void select_checkMouseHover(RenderWindow& window, Sprite difficulty[], int numphoto, int& selectedOption) {
+    bool check = 0;
+    for (int i = 0; i < 3; i++)
     {
-        for (int j = 0; j < col; j++)
+        if (difficulty[i].getGlobalBounds().contains(window.mapPixelToCoords(Mouse::getPosition(window))))
         {
-            int x = i * col + j;
-            if (x < 10)
-            {
-                cout << x << "   ";
-                continue;
-            }
-            if (x < 100)
-            {
-                cout << x << "  ";
-                continue;
-            }
-            if (x < 1000)
-            {
-                cout << x << " ";
-                continue;
-            }
-
-
+            selectedOption = i;
+            check = 1;
         }
-        cout << endl;
     }
-    cout << endl;
-    cout << endl;
-
-
-
-    for (int i = 0; i < row; i++)
+    if (check == 0)
     {
-        for (int j = 0; j < col; j++)
+        selectedOption = -1;
+    }
+}
+int SelectDifficulty(RenderWindow& window) {
+    int selectedOption = -1;
+    Texture background;
+    Sprite bg;
+    background.loadFromFile("Assets/images/select difficulty.png");
+    bg.setTexture(background);
+    bg.setScale(1.9, 1);
+    bg.setPosition(0, 0);
+
+    Texture difficulty[3];
+    Sprite df[3];
+    difficulty[0].loadFromFile("Assets/images/select easy.png");
+    difficulty[1].loadFromFile("Assets/images/select medium.png");
+    difficulty[2].loadFromFile("Assets/images/select hard.png");
+
+    for (int i = 0; i < 3; i++)
+    {
+        df[i].setTexture(difficulty[i]);
+    }
+
+    while (window.isOpen())
+    {
+        Event event;
+        while (window.pollEvent(event))
         {
-            int x = g.pacmanMatrix[i][j];
-            if (x < 10)
+            if (event.type == Event::Closed)
             {
-                cout << x << "   ";
-                continue;
-            }
-            if (x < 100)
-            {
-                cout << x << "  ";
-                continue;
-            }
-            if (x < 1000)
-            {
-                cout << x << " ";
-                continue;
+                window.close();
             }
 
+            if (Keyboard::isKeyPressed(Keyboard::Escape))
+            {
+                return 1000;
+            }
 
+            if (event.type == Event::MouseMoved)
+            {
+                select_checkMouseHover(window, df, 3, selectedOption);
+            }
+
+            if (event.type == Event::MouseButtonPressed) {
+                if (event.mouseButton.button == Mouse::Left)
+                {
+                    if (selectedOption != -1)
+                    {
+                        return selectedOption;
+
+                    }
+                }
+            }
         }
-        cout << endl;
+
+        window.clear();
+        window.draw(bg);
+
+        for (int i = 0; i < 3; i++)
+        {
+            if (selectedOption == i)
+            {
+                df[i].setScale(1.2f, 1.2f);
+                df[i].setPosition(400 * i + 400 - 20, 550 - 20);
+                df[i].setColor(i == 0 ? Color::Green : (i == 1 ? Color::Yellow : Color::Red));
+            }
+            else
+            {
+                df[i].setScale(1.f, 1.f);
+                df[i].setColor(Color::White);
+                df[i].setPosition(400 * i + 400, 550);
+            }
+
+            window.draw(df[i]);
+        }
+
+        window.display();
     }
-
-
-
-
-
-    vector<int> path = Graph::bfs(22, 25);
-
-    cout << path.size() << endl << endl << endl << endl;
-    for (int i = 0; i < path.size(); i++)
-    {
-        cout << path[i] << " ";
-    }
-    return 1000;
 }
 
 
+int Game_Play(RenderWindow& window) {
+    int x = SelectDifficulty(window);
+    Graph g;
+    pacman player;
+    Map_Level map;
+
+    ghost myghost;
+    
+    while (window.isOpen()) {
+        Event event;
+
+
+        while (window.pollEvent(event)) {
+            if (event.type == Event::Closed)
+            {
+                window.close();
+            }
+            if (Keyboard::isKeyPressed(Keyboard::Enter))
+            {
+                cout << "x player  \n" << player.pacsprite.getPosition().x << "       " << player.pacsprite.getPosition().y << endl;
+                cout << "X  \n" << Graph::nodesInfo[player.i * Graph::COLS + player.j].XstartPoint << "  " << Graph::nodesInfo[player.i * Graph::COLS + player.j].Xcenter
+                    << "   " << Graph::nodesInfo[player.i * Graph::COLS + player.j].XendPoint << endl;
+                cout << " Y  \n";
+                cout << Graph::nodesInfo[player.i * Graph::COLS + player.j].YstartPoint << "  " << Graph::nodesInfo[player.i * Graph::COLS + player.j].Ycenter
+                    << "   " << Graph::nodesInfo[player.i * Graph::COLS + player.j].YendPoint << endl;
+            }
+            if (Keyboard::isKeyPressed(Keyboard::Escape))
+            {
+                return 1000;   //Return to menu
+            }
+
+        }
+
+        window.clear();
+
+        player.movement();  // ???? ??? ???
+        player.draw(window); // ??? ??? ???
+        myghost.movement(player, g);
+        myghost.draw(window);
+        
+
+        map.drawMap(window);
+        player.draw(window);
+
+        window.display();
+    }
+}
+    
