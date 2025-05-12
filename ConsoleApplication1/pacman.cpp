@@ -85,3 +85,4 @@ void pacman::movement() {
 void pacman::draw(RenderWindow& window) {
     window.draw(pacsprite);
 }
+

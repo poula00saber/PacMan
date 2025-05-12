@@ -18,12 +18,12 @@
 #include<iomanip>
 #include<fstream>
 #include<math.h>
-#include <iomanip>
+
 #include<SFML/Window/Event.hpp>
 #include<SFML/Graphics.hpp>
 #include<SFML/Audio.hpp>
 #include<Windows.h>
-#include"Level1_Map.h"
+#include"Map_Level.h"
 #include"Menu.h"
 #include"SoundManager.h"
 #include"ghost.h";
@@ -490,7 +490,7 @@ int Game_Play(RenderWindow& window) {
     int x = SelectDifficulty(window);
     Graph g;
     pacman player;
-    Level1_Map map;
+    Map_Level map;
 
     ghost myghost;
     
