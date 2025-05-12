@@ -1,7 +1,6 @@
 #pragma once
-#include "Graph.h"
 #include <SFML/Graphics.hpp>
-
+#include "Graph.h"
 
 using namespace sf;
 
@@ -19,7 +18,6 @@ public:
     Texture pactexture;
     int frame;
     float speed;
+    int restframe;
     Graph g;
-
-
 };

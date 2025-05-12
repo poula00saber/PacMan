@@ -5,7 +5,7 @@
 ghost::ghost() {
     ghostTex.loadFromFile("Assets/images/enemy_spritethis.png");
     ghostSprite.setTexture(ghostTex);
-    ghostSprite.setTextureRect(IntRect(0, 0, 18, 16));
+    ghostSprite.setTextureRect(IntRect(0, 0, 20, 17));
     ghostSprite.setScale(3, 3);
     ghostSprite.setPosition(Graph::NODESIZE, Graph::NODESIZE);
     frame = 0;
@@ -47,6 +47,7 @@ void ghost::movement(pacman& player, Graph& g) {
         }
         else if (nextJ < ghostJ) {
             status = 1;  // left
+            
         }
         else if (nextI < ghostI) {
             status = 2;  // up
@@ -58,26 +59,26 @@ void ghost::movement(pacman& player, Graph& g) {
 
         if (status == 0) { 
             frame++;
-            int frameIndex = (frame / 15) % 6;
-            ghostSprite.setTextureRect(IntRect(frameIndex* 16, 0, 18, 16));
+            int frameIndex = frame % 2;
+            ghostSprite.setTextureRect(IntRect(frameIndex* 17, 0, 20, 17));
             ghostSprite.move(speed, 0);
         }
         else if (status == 1) {  
             frame++;
-            int frameIndex = (frame / 15) % 6;
-            ghostSprite.setTextureRect(IntRect(frameIndex * 16, 0, 18, 16));
+            int frameIndex = frame % 6;
+            ghostSprite.setTextureRect(IntRect(frameIndex * 17, 0, 20, 17));
             ghostSprite.move(-speed, 0);
         }
         else if (status == 2) {  
             frame++;
-            int frameIndex = (frame / 15) % 6;
-            ghostSprite.setTextureRect(IntRect(frameIndex * 16, 0, 18, 16));
+            int frameIndex = frame % 6;
+            ghostSprite.setTextureRect(IntRect(frameIndex * 17, 0, 20, 17));
             ghostSprite.move(0, -speed);
         }
         else if (status == 3) {  
             frame++;
-            int frameIndex = (frame / 10) % 6;
-            ghostSprite.setTextureRect(IntRect(frameIndex * 16, 0, 18, 16));
+            int frameIndex = frame % 6;
+            ghostSprite.setTextureRect(IntRect(frameIndex * 17, 0, 20, 17));
             ghostSprite.move(0, speed);
         }
     }
