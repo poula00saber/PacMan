@@ -2,7 +2,9 @@
 #include <SFML/Window/Keyboard.hpp>
 
 pacman::pacman() {
+
     pactexture.loadFromFile("Assets/Textures/PacMan16.png");
+
     pacsprite.setTexture(pactexture);
     pacsprite.setTextureRect(IntRect(4 * 16, 0, 16, 16));
     pacsprite.setScale(3, 3);
@@ -84,4 +86,9 @@ void pacman::movement() {
 }
 void pacman::draw(RenderWindow& window) {
     window.draw(pacsprite);
-}
+
+  }
+
+
+
+

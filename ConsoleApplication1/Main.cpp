@@ -4,6 +4,7 @@
 #include<deque>
 #include<vector>
 #include<set>
+#include "Graph.h"
 #include<map>
 #include<unordered_map>
 #include<unordered_set>
@@ -17,14 +18,15 @@
 #include<iomanip>
 #include<fstream>
 #include<math.h>
-#include <iomanip>
+
 #include<SFML/Window/Event.hpp>
 #include<SFML/Graphics.hpp>
 #include<SFML/Audio.hpp>
 #include<Windows.h>
+#include"Map_Level.h"
 #include"Menu.h"
 #include"SoundManager.h"
-//#include "Graph.h"
+#include"ghost.h";
 #include "pacman.h"
 
 
@@ -486,20 +488,30 @@ int SelectDifficulty(RenderWindow& window) {
 
 int Game_Play(RenderWindow& window) {
     int x = SelectDifficulty(window);
-
+    Graph g;
     pacman player;
+    Map_Level map;
 
+    ghost myghost;
+    
     while (window.isOpen()) {
         Event event;
+
+
         while (window.pollEvent(event)) {
             if (event.type == Event::Closed)
             {
                 window.close();
             }
-            /*  if (Keyboard::isKeyPressed(Keyboard::Enter))
-              {
-
-              }*/
+            if (Keyboard::isKeyPressed(Keyboard::Enter))
+            {
+                cout << "x player  \n" << player.pacsprite.getPosition().x << "       " << player.pacsprite.getPosition().y << endl;
+                cout << "X  \n" << Graph::nodesInfo[player.i * Graph::COLS + player.j].XstartPoint << "  " << Graph::nodesInfo[player.i * Graph::COLS + player.j].Xcenter
+                    << "   " << Graph::nodesInfo[player.i * Graph::COLS + player.j].XendPoint << endl;
+                cout << " Y  \n";
+                cout << Graph::nodesInfo[player.i * Graph::COLS + player.j].YstartPoint << "  " << Graph::nodesInfo[player.i * Graph::COLS + player.j].Ycenter
+                    << "   " << Graph::nodesInfo[player.i * Graph::COLS + player.j].YendPoint << endl;
+            }
             if (Keyboard::isKeyPressed(Keyboard::Escape))
             {
                 return 1000;   //Return to menu
@@ -509,76 +521,16 @@ int Game_Play(RenderWindow& window) {
 
         window.clear();
 
-        player.movement();  // ÍÑßÉ ÈÇß ãÇä
-        player.draw(window); // ÚÑÖ ÈÇß ãÇä
+        player.movement();  // ???? ??? ???
+        player.draw(window); // ??? ??? ???
+        myghost.movement(player, g);
+        myghost.draw(window);
+        
+
+        map.drawMap(window);
+        player.draw(window);
 
         window.display();
     }
-
-    //Graph g;
-    //int row = g.pacmanMatrix.size();
-    //int col = g.pacmanMatrix[0].size();
-    //for (int i = 0; i < row; i++)
-    //{
-    //    for (int j = 0; j < col; j++)
-    //    {
-    //        int x = i * col + j;
-    //        if (x < 10)
-    //        {
-    //            cout << x << "   ";
-    //            continue;
-    //        }
-    //        if (x < 100)
-    //        {
-    //            cout << x << "  ";
-    //            continue;
-    //        }
-    //        if (x < 1000)
-    //        {
-    //            cout << x << " ";
-    //            continue;
-    //        }
-
-
-    //    }
-    //    cout << endl;
-    //}
-    //cout << endl;
-    //cout << endl;
-
-
-
-    //for (int i = 0; i < row; i++)
-    //{
-    //    for (int j = 0; j < col; j++)
-    //    {
-    //        int x = g.pacmanMatrix[i][j];
-    //        if (x < 10)
-    //        {
-    //            cout << x << "   ";
-    //            continue;
-    //        }
-    //        if (x < 100)
-    //        {
-    //            cout << x << "  ";
-    //            continue;
-    //        }
-    //        if (x < 1000)
-    //        {
-    //            cout << x << " ";
-    //            continue;
-    //        }
-
-
-    //    }
-    //    cout << endl;
-    //}
-    //vector<int> path = Graph::bfs(22, 25);
-
-    //cout << path.size() << endl << endl << endl << endl;
-    //for (int i = 0; i < path.size(); i++)
-    //{
-    //    cout << path[i] << " ";
-    //}
-    //return 1000;
 }
+    
