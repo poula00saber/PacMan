@@ -4,6 +4,7 @@
 #include<deque>
 #include<vector>
 #include<set>
+#include "Graph.h"
 #include<map>
 #include<unordered_map>
 #include<unordered_set>
@@ -25,7 +26,7 @@
 #include"Level1_Map.h"
 #include"Menu.h"
 #include"SoundManager.h"
-//#include "Graph.h"
+#include"ghost.h";
 #include "pacman.h"
 
 
@@ -487,10 +488,12 @@ int SelectDifficulty(RenderWindow& window) {
 
 int Game_Play(RenderWindow& window) {
     int x = SelectDifficulty(window);
-
+    Graph g;
     pacman player;
     Level1_Map map;
 
+    ghost myghost;
+    
     while (window.isOpen()) {
         Event event;
 
@@ -518,7 +521,11 @@ int Game_Play(RenderWindow& window) {
 
         window.clear();
 
-        player.movement();
+        player.movement();  // ???? ??? ???
+        player.draw(window); // ??? ??? ???
+        myghost.movement(player, g);
+        myghost.draw(window);
+        
 
         map.drawMap(window);
         player.draw(window);

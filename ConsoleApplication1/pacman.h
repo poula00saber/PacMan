@@ -18,7 +18,6 @@ public:
     Texture pactexture;
     int frame;
     float speed;
+    int restframe;
     Graph g;
-
-
 };
