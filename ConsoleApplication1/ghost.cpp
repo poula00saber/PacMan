@@ -65,20 +65,20 @@ void ghost::movement(pacman& player, Graph& g) {
         }
         else if (status == 1) {  
             frame++;
-            int frameIndex = frame % 6;
-            ghostSprite.setTextureRect(IntRect(frameIndex * 17, 0, 20, 17));
+            int frameIndex = frame % 2;
+            ghostSprite.setTextureRect(IntRect((frameIndex) * 17, 0, 20, 17));
             ghostSprite.move(-speed, 0);
         }
         else if (status == 2) {  
             frame++;
-            int frameIndex = frame % 6;
-            ghostSprite.setTextureRect(IntRect(frameIndex * 17, 0, 20, 17));
+            int frameIndex = frame % 2;
+            ghostSprite.setTextureRect(IntRect((frameIndex+2) * 17, 0, 20, 17));
             ghostSprite.move(0, -speed);
         }
         else if (status == 3) {  
             frame++;
-            int frameIndex = frame % 6;
-            ghostSprite.setTextureRect(IntRect(frameIndex * 17, 0, 20, 17));
+            int frameIndex = frame % 2;
+            ghostSprite.setTextureRect(IntRect((frameIndex+4) * 17, 0, 20, 17));
             ghostSprite.move(0, speed);
         }
     }
