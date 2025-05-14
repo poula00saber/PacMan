@@ -1,4 +1,6 @@
 #include "TileRenderer.h"
+#include "Food.h"
+#include "Food.cpp"
 #include <iostream>
 
 
@@ -6,12 +8,12 @@ TileRenderer::TileRenderer(int tileSize, int level)
     : tileSize(tileSize)
 {
     checklevel(level);
-
+    initializeFood();
     if (!texture0.loadFromFile("Assets/Textures/48x48Map.png")) {
         cerr << "Failed to load texture0 from: " << " texturePath0" << endl;
     }
     if (!texture1.loadFromFile("Assets/images/PMSprites.png")) {
-        
+
         cerr << "Failed to load texture0 from: " << "texturePath1" << endl;
     }
 
@@ -26,6 +28,7 @@ TileRenderer::TileRenderer(int tileSize, int level)
         tileSize / (float)texture1.getSize().x,
         tileSize / (float)texture1.getSize().y
     );
+
 }
 
 // Draw function
@@ -36,15 +39,42 @@ void TileRenderer::draw(RenderWindow& window) {
                 sprite0.setPosition(j * tileSize, i * tileSize);
                 window.draw(sprite0);
             }
-            else if (Graph::pacmanMatrix[i][j] == 1) {
-                sprite1.setPosition(j * tileSize, i * tileSize);
-                window.draw(sprite1);
+        }
+    }
+    for (const auto& food : foodList) {
+        if (food) {
+            food->draw(window);
+        }
+    }
+}
+void TileRenderer::initializeFood() {
+    foodList.clear(); // Clear existing food first
+    srand(static_cast<unsigned>(time(0))); // Better random seed
+
+    for (size_t i = 0; i < Graph::pacmanMatrix.size(); ++i) {
+        for (size_t j = 0; j < Graph::pacmanMatrix[i].size(); ++j) {
+            Vector2f position(j * tileSize, i * tileSize);
+
+            if (Graph::pacmanMatrix[i][j] == 1) {
+                int randomChoice = rand() % 100;
+
+                if (randomChoice < 5) {
+                    foodList.push_back(std::make_unique<Fruit>(position));
+                }
+                else if (randomChoice < 10) {
+                    foodList.push_back(std::make_unique<Skill>(position));
+                }
+                else {
+                    foodList.push_back(std::make_unique<Dot>(position));
+                }
             }
         }
     }
 }
 
-
+std::vector<std::unique_ptr<Food>>& TileRenderer::getfoodList() {
+    return foodList; 
+}
 void TileRenderer::checklevel(int level) {
     if (level == 0)
     {
@@ -132,7 +162,3 @@ void TileRenderer::checklevel(int level) {
 
 }
 
-
-int TileRenderer::eating() {
-    return 1;
-}

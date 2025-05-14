@@ -14,13 +14,15 @@ protected:
     FoodType type;
     Texture texture;
     Sprite image;
+    int fruitImageIndex;
 
 public:
     // Updated constructor to accept position and size
     Food(FoodType type, int value, Vector2f pos, Vector2f sz);
-
+    virtual sf::FloatRect getBounds() const {
+        return sf::FloatRect(position.x, position.y, size.x, size.y);
+    }
     virtual void draw(RenderWindow& window) = 0;
-
     void setEaten();
     bool eaten() const;
     int getValueScore() const;
@@ -31,7 +33,7 @@ public:
 
 class Dot : public Food {
 public:
-    Dot(Vector2f pos); // Constructor accepts position
+    Dot(Vector2f pos); 
     void draw(RenderWindow& window) override;
 };
 

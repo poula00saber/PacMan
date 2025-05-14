@@ -491,43 +491,46 @@ int SelectDifficulty(RenderWindow& window) {
 
 
 int Game_Play(RenderWindow& window, int level) {
-
     Graph g;
-    pacman player(19,20);
-    
+    pacman player(19, 20);
 
     TileRenderer tileRenderer(48, level);
     ghost myghost;
+    
+    tileRenderer.initializeFood(); //Create food for level
 
+    
     while (window.isOpen()) {
         Event event;
         while (window.pollEvent(event)) {
-            if (event.type == Event::Closed)
-            {
+            if (event.type == Event::Closed) {
                 window.close();
             }
-            if (Keyboard::isKeyPressed(Keyboard::Enter))
-            {
-                cout << "x player  \n" << player.pacsprite.getPosition().x << "       " << player.pacsprite.getPosition().y << endl;
-                cout << "X  \n" << Graph::nodesInfo[player.i * Graph::COLS + player.j].XstartPoint << "  " << Graph::nodesInfo[player.i * Graph::COLS + player.j].Xcenter
-                    << "   " << Graph::nodesInfo[player.i * Graph::COLS + player.j].XendPoint << endl;
-                cout << " Y  \n";
-                cout << Graph::nodesInfo[player.i * Graph::COLS + player.j].YstartPoint << "  " << Graph::nodesInfo[player.i * Graph::COLS + player.j].Ycenter
-                    << "   " << Graph::nodesInfo[player.i * Graph::COLS + player.j].YendPoint << endl;
-            }
-            if (Keyboard::isKeyPressed(Keyboard::Escape))
-            {
+            if (Keyboard::isKeyPressed(Keyboard::Escape)) {
                 return 1000;
             }
-
         }
 
-        window.clear();
-
-        tileRenderer.draw(window);
+        
         player.movement();
-        player.draw(window);
         myghost.movement(player, g);
+
+        
+        auto& foodList = tileRenderer.getfoodList();
+        for (auto it = foodList.begin(); it != foodList.end(); ) {
+            if (player.pacsprite.getGlobalBounds().intersects((*it)->getBounds())) {
+                it = foodList.erase(it);
+            }
+            else {
+                ++it;
+            }
+        }        
+        
+
+        
+        window.clear();
+        tileRenderer.draw(window);
+        player.draw(window);
         myghost.draw(window);
         window.display();
     }
