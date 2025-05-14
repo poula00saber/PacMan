@@ -8,6 +8,7 @@ public:
     TileRenderer( int tileSize,int level);
     void draw(RenderWindow& window);
     void checklevel(int value);
+    int eating();
 
 private:
     int tileSize;

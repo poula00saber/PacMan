@@ -1,14 +1,14 @@
 ﻿#include "pacman.h"
 #include <SFML/Window/Keyboard.hpp>
 
-pacman::pacman() {
+pacman::pacman(int pacx,int pacy) {
 
     pactexture.loadFromFile("Assets/Textures/PacMan16.png");
 
     pacsprite.setTexture(pactexture);
     pacsprite.setTextureRect(IntRect(4 * 16, 0, 16, 16));
     pacsprite.setScale(3, 3);
-    pacsprite.setPosition(g.NODESIZE, g.NODESIZE);
+    pacsprite.setPosition(g.NODESIZE*pacx, g.NODESIZE*pacy);
     frame = 0;
     speed = 0.1f;
     status = -1;
