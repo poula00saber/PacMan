@@ -9,7 +9,7 @@ public:
     void draw(RenderWindow& window);
     void checklevel(int value);
     int eating();
-
+    void draweating(RenderWindow& window);
 private:
     int tileSize;
     Texture texture0, texture1;

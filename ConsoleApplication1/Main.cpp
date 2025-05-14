@@ -412,6 +412,7 @@ void select_checkMouseHover(RenderWindow& window, Sprite difficulty[], int numph
         selectedOption = -1;
     }
 }
+
 int SelectDifficulty(RenderWindow& window) {
     int selectedOption = -1;
     Texture background;
@@ -525,6 +526,7 @@ int Game_Play(RenderWindow& window, int level) {
         window.clear();
 
         tileRenderer.draw(window);
+        tileRenderer.draweating(window);
         player.movement();
         player.draw(window);
         myghost.movement(player, g);
@@ -532,3 +534,5 @@ int Game_Play(RenderWindow& window, int level) {
         window.display();
     }
 }
+
+

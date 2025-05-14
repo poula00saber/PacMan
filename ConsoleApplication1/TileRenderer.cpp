@@ -34,10 +34,12 @@ void TileRenderer::draw(RenderWindow& window) {
         for (size_t j = 0; j < Graph::pacmanMatrix[i].size(); ++j) {
             if (Graph::pacmanMatrix[i][j] == 0) {
                 sprite0.setPosition(j * tileSize, i * tileSize);
+
                 window.draw(sprite0);
             }
             else if (Graph::pacmanMatrix[i][j] == 1) {
                 sprite1.setPosition(j * tileSize, i * tileSize);
+                sprite1.setScale(1, 1);
                 window.draw(sprite1);
             }
         }
@@ -134,5 +136,25 @@ void TileRenderer::checklevel(int level) {
 
 
 int TileRenderer::eating() {
-    return 1;
+    return 6;
+}
+void TileRenderer::draweating(RenderWindow& window) {
+    int count = eating();
+    string number = to_string(count);
+    Font font;
+    font.loadFromFile("Assets/font/Prison Tattoo.ttf");   //font
+    Text t;
+    t.setFont(font);
+    t.setCharacterSize(55);
+    if (count < 10) t.setPosition(910, 45);
+    else if (count < 100)t.setPosition(890, 45);
+    else t.setPosition(880, 45);
+    t.setFillColor(Color::White);
+    t.setString(number);
+    sprite1.setScale(1.5,1.5);
+    sprite1.setPosition(965, 40);
+    
+    window.draw(sprite1);
+    window.draw(t);
+
 }
