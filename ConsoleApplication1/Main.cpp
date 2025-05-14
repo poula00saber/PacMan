@@ -509,8 +509,8 @@ int Game_Play(RenderWindow& window) {
                 cout << "X  \n" << Graph::nodesInfo[player.i * Graph::COLS + player.j].XstartPoint << "  " << Graph::nodesInfo[player.i * Graph::COLS + player.j].Xcenter
                     << "   " << Graph::nodesInfo[player.i * Graph::COLS + player.j].XendPoint << endl;
                 cout << " Y  \n";
-                cout << Graph::nodesInfo[player.i * Graph::COLS + player.j].YstartPoint << "  " << Graph::nodesInfo[player.i * Graph::COLS + player.j].Ycenter
-                    << "   " << Graph::nodesInfo[player.i * Graph::COLS + player.j].YendPoint << endl;
+                cout << Graph::nodesInfo[(player.i+1) * Graph::COLS + player.j].YstartPoint << "  " << Graph::nodesInfo[ (player.i+1) * Graph::COLS + player.j].Ycenter
+                    << "   " << Graph::nodesInfo[((player.i+1) * Graph::COLS) + player.j].YendPoint << endl;
             }
             if (Keyboard::isKeyPressed(Keyboard::Escape))
             {

@@ -5,10 +5,11 @@ pacman::pacman() {
 
     pactexture.loadFromFile("Assets/Textures/PacMan16.png");
 
+    pacsprite.setOrigin(8, 8);
     pacsprite.setTexture(pactexture);
     pacsprite.setTextureRect(IntRect(4 * 16, 0, 16, 16));
     pacsprite.setScale(3, 3);
-    pacsprite.setPosition(g.NODESIZE, g.NODESIZE);
+    pacsprite.setPosition( 1.5* g.NODESIZE, 1.5*g.NODESIZE);
     frame = 0;
     speed = 0.1f;
     status = -1;
@@ -16,6 +17,7 @@ pacman::pacman() {
 }
 void pacman::movement() {
     Vector2f pos = pacsprite.getPosition();
+    
     i = static_cast<int>(pos.y) / g.NODESIZE;
     j = static_cast<int>(pos.x) / g.NODESIZE;
 
@@ -54,8 +56,14 @@ void pacman::movement() {
 
 
 
-    if (status == 0 && (g.pacmanMatrix[i][j + 1] != 0 || (pacsprite.getPosition().x <= Graph::nodesInfo[i * Graph::COLS + j].Xcenter && g.pacmanMatrix[i][j] != 0))) {  // Right
+    if (status == 0 && (g.pacmanMatrix[i][j + 1] != 0 || (pacsprite.getPosition().x <= g.nodesInfo[i * Graph::COLS + j].XstartPoint && g.pacmanMatrix[i][j] != 0))) {  // Right
         frame++;
+        if (pacsprite.getGlobalBounds().getPosition().y + pacsprite.getGlobalBounds().top/2 >= g.nodesInfo[(i + 1) * Graph::COLS + j].YstartPoint || floor(pos.y) <= g.nodesInfo[(i - 1) * Graph::COLS + j].YendPoint)
+        {
+       //     cout << "Node start point: "<<g.nodesInfo[(i + 1) * Graph::COLS + j].YstartPoint<<endl;
+         //   cout << "My middle point hopefully idk: " << pacsprite.getPosition().y << endl;
+            pacsprite.setPosition(g.nodesInfo[i * Graph::COLS + j].Xcenter, g.nodesInfo[i * Graph::COLS + j].Ycenter);
+        }
         pacsprite.setTextureRect(IntRect((frame % 5) * 16, 0, 16, 16));
         pacsprite.move(speed, 0);
         restframe = 0;
@@ -74,6 +82,7 @@ void pacman::movement() {
     }
     else if (status == 3 && (g.pacmanMatrix[i + 1][j] != 0 || (pacsprite.getPosition().y <= Graph::nodesInfo[i * Graph::COLS + j].Ycenter && g.pacmanMatrix[i][j] != 0))) {  // Down
         frame++;
+
         pacsprite.setTextureRect(IntRect((frame % 5) * 16, 3 * 16, 16, 16));
         pacsprite.move(0, speed);
         restframe = 3;
@@ -82,6 +91,8 @@ void pacman::movement() {
         pacsprite.setTextureRect(IntRect(4 * 16, restframe * 16, 16, 16));
         status = -1;
     }
+
+     
 
 }
 void pacman::draw(RenderWindow& window) {
