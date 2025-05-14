@@ -493,8 +493,8 @@ int SelectDifficulty(RenderWindow& window) {
 int Game_Play(RenderWindow& window, int level) {
 
     Graph g;
-    pacman player;
-
+    pacman player(19,20);
+    
 
     TileRenderer tileRenderer(48, level);
     ghost myghost;

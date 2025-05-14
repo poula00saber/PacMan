@@ -6,7 +6,7 @@ using namespace sf;
 
 class pacman {
 public:
-    pacman();
+    pacman(int x,int y);
 
     void movement();
     void draw(RenderWindow& window);
