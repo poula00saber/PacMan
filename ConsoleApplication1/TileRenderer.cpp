@@ -136,8 +136,10 @@ void TileRenderer::checklevel(int level) {
 
 
 int TileRenderer::eating() {
-    return 6;
+    return 1;
 }
+
+
 void TileRenderer::draweating(RenderWindow& window) {
     int count = eating();
     string number = to_string(count);
@@ -158,3 +160,4 @@ void TileRenderer::draweating(RenderWindow& window) {
     window.draw(t);
 
 }
+
