@@ -61,8 +61,6 @@ unordered_map<int, vector<int>> Graph::constructGraph(vector<vector<int>>& pacma
 	{
 		for (int j = 0; j < col; j++)
 		{
-			 
-			int nodeId = (col * i) + j;
 			if (pacmanMatrix[i][j] != 0)
 			{
 				vector <int>v;
@@ -85,13 +83,12 @@ unordered_map<int, vector<int>> Graph::constructGraph(vector<vector<int>>& pacma
 				}
 				if (v.size())
 				{
+					int nodeId = (col * i) + j;
 					graph[nodeId] = v;
 					nodesInfo[nodeId] = ConstructNode(i, j, nodeSize);
 
 				}
 			}
-			nodesInfo[nodeId] = ConstructNode(i, j, nodeSize);
-
 		}
 
 

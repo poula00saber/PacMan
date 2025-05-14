@@ -12,7 +12,7 @@ public:
     void draw(RenderWindow& window);
     int i, j;
     Sprite pacsprite;
-
+    FloatRect bounds;
 public:
     int status;
     Texture pactexture;
@@ -20,4 +20,5 @@ public:
     float speed;
     int restframe;
     Graph g;
+
 };
