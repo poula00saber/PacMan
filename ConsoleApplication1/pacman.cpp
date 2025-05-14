@@ -1,4 +1,4 @@
-#include "pacman.h"
+﻿#include "pacman.h"
 #include <SFML/Window/Keyboard.hpp>
 
 pacman::pacman() {

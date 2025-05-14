@@ -7,7 +7,7 @@ ghost::ghost() {
     ghostSprite.setTexture(ghostTex);
     ghostSprite.setTextureRect(IntRect(0, 0, 20, 17));
     ghostSprite.setScale(3, 3);
-    ghostSprite.setPosition(Graph::NODESIZE, Graph::NODESIZE);
+    ghostSprite.setPosition(50, 50);
     frame = 0;
     speed = 0.05f;  //shoujd be less than or equal to pacman's speed for easy mode(morein hard)
     status = -1;

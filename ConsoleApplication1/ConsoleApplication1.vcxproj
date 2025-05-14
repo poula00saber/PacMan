@@ -137,19 +137,17 @@
     <ClCompile Include="ghost.cpp" />
     <ClCompile Include="Graph.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Map_Level.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="pacman.cpp" />
-    <ClCompile Include="SoundManager.cpp" />
+    <ClCompile Include="TileRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ghost.h" />
     <ClInclude Include="Graph.h" />
-    <ClInclude Include="Map_Level.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="pacman.h" />
     <ClInclude Include="SoundManager.h" />
-    <ClInclude Include="TileMap.h" />
+    <ClInclude Include="TileRenderer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

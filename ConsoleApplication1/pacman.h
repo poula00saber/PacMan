@@ -12,7 +12,7 @@ public:
     void draw(RenderWindow& window);
     int i, j;
     Sprite pacsprite;
-
+    int nextStatus;
 public:
     int status;
     Texture pactexture;

@@ -18,17 +18,17 @@
 #include<iomanip>
 #include<fstream>
 #include<math.h>
-
+#include <iomanip>
 #include<SFML/Window/Event.hpp>
 #include<SFML/Graphics.hpp>
 #include<SFML/Audio.hpp>
 #include<Windows.h>
-#include"Map_Level.h"
 #include"Menu.h"
 #include"SoundManager.h"
 #include"ghost.h";
 #include "pacman.h"
-
+#include<dsound.h>
+#include "TileRenderer.h"
 
 using namespace std;
 using namespace sf;
@@ -48,7 +48,7 @@ using namespace sf;
 
 int Design(RenderWindow& window);
 int instruction(RenderWindow& window);
-int Game_Play(RenderWindow& window);
+int Game_Play(RenderWindow& window,int level);
 void drawMenu(RenderWindow& window, Menu& menu, Sprite& bg);
 void handleEvents(RenderWindow& window, Menu& menu, int& pagenum);
 void numphoto_checkMouseHover(RenderWindow& window, RectangleShape numplay[], int& selectedOption);
@@ -66,6 +66,8 @@ int main() {
         system("pause");
         return -1;
     }
+    soundManagerr.sound[0].setLoop(true);
+    soundManagerr.sound[0].play();
 
     int pagenum = 1000; // Index for choosing
     Menu menu(1920, 1080);
@@ -78,9 +80,8 @@ int main() {
     Sprite bg;
     bg.setPosition(0, -200);
     bg.setTexture(mainmenubg);
-
-    soundManagerr.sound[0].setLoop(true);
-    soundManagerr.sound[0].play();
+   
+   
     while (true) {
 
         if (pagenum == 1000) {
@@ -93,8 +94,10 @@ int main() {
                 drawMenu(window, menu, bg);
             }
             if (pagenum == 0) {
+                int level =SelectDifficulty(window);
                 soundManagerr.sound[0].stop();
-                pagenum = Game_Play(window);
+                soundManagerr.sound[1].play();
+                pagenum = Game_Play(window,level);
                 soundManagerr.sound[0].play();
             }
             if (pagenum == -1) {
@@ -103,6 +106,7 @@ int main() {
                 break;
             }
             if (pagenum == 2) {
+                soundManagerr.sound[1].play();
                 pagenum = Design(window);
             }
             if (pagenum == 1) {
@@ -486,18 +490,17 @@ int SelectDifficulty(RenderWindow& window) {
 }
 
 
-int Game_Play(RenderWindow& window) {
-    int x = SelectDifficulty(window);
+int Game_Play(RenderWindow& window, int level) {
+
     Graph g;
     pacman player;
-    Map_Level map;
 
+
+    TileRenderer tileRenderer(48, level);
     ghost myghost;
-    
+
     while (window.isOpen()) {
         Event event;
-
-
         while (window.pollEvent(event)) {
             if (event.type == Event::Closed)
             {
@@ -514,23 +517,18 @@ int Game_Play(RenderWindow& window) {
             }
             if (Keyboard::isKeyPressed(Keyboard::Escape))
             {
-                return 1000;   //Return to menu
+                return 1000;
             }
 
         }
 
         window.clear();
 
-        player.movement();  // ???? ??? ???
-        player.draw(window); // ??? ??? ???
+        tileRenderer.draw(window);
+        player.movement();
+        player.draw(window);
         myghost.movement(player, g);
         myghost.draw(window);
-        
-
-        map.drawMap(window);
-        player.draw(window);
-
         window.display();
     }
 }
-    
