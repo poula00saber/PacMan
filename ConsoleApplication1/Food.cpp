@@ -46,7 +46,6 @@ void Dot::draw(RenderWindow& window) {
     }
     image.setTexture(texture);
     image.setPosition(position);
-    image.setScale(size.x / texture.getSize().x, size.y / texture.getSize().y);  
     window.draw(image);
 }
 
@@ -56,24 +55,29 @@ Skill::Skill(sf::Vector2f position) : Food(FoodType::Skill, 50, position, sf::Ve
 }
 
 void Skill::draw(RenderWindow& window) {
-    if (!texture.loadFromFile("Assets/image/Fruit32.png")) {
+    if (!texture.loadFromFile("Assets/Textures/Energizer24.png")) {
         std::cerr << "Error loading texture for Skill!" << std::endl;
     }
     image.setTexture(texture);
     image.setPosition(position);
-    image.setScale(size.x / texture.getSize().x, size.y / texture.getSize().y);  // Scale image to 8x8
     window.draw(image);
 }
-
-Fruit::Fruit(Vector2f pos) : Food(FoodType::Fruit, 100, pos, sf::Vector2f(8, 8)) {}
-
-void Fruit::draw(RenderWindow& window) {
-    int fruitImageIndex = rand() % 6;
-    if (!texture.loadFromFile("Assets/images/Fruit32.png")) {
+Fruit::Fruit(Vector2f pos)
+    : Food(FoodType::Fruit, 100, pos, sf::Vector2f(8, 8))
+{
+    // Load texture only once in the constructor
+    if (!texture.loadFromFile("Assets/Textures/Fruit32.png")) {
         std::cerr << "Error loading texture for Fruit!" << std::endl;
     }
     image.setTexture(texture);
-    image.setTextureRect(sf::IntRect(fruitImageIndex * 32, 0, 32, 32));  
+
+    // Randomly select a fruit type ONCE when created
+    fruitImageIndex = rand() % 8;  // Assuming 8 fruits in the sprite sheet
+    image.setTextureRect(sf::IntRect(fruitImageIndex * 32, 0, 32, 32));
+}
+
+void Fruit::draw(RenderWindow& window) {
+    // No need to reload the texture here!
     image.setPosition(position);
     window.draw(image);
 }
