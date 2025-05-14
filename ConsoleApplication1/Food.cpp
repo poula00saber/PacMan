@@ -46,7 +46,6 @@ void Dot::draw(RenderWindow& window) {
     }
     image.setTexture(texture);
     image.setPosition(position);
-    image.setScale(size.x / texture.getSize().x, size.y / texture.getSize().y);  
     window.draw(image);
 }
 
@@ -61,7 +60,6 @@ void Skill::draw(RenderWindow& window) {
     }
     image.setTexture(texture);
     image.setPosition(position);
-    image.setScale(size.x / texture.getSize().x, size.y / texture.getSize().y);  // Scale image to 8x8
     window.draw(image);
 }
 Fruit::Fruit(Vector2f pos)
