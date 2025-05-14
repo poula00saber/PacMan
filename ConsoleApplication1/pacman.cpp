@@ -10,7 +10,7 @@ pacman::pacman(int pacx,int pacy) {
     pacsprite.setScale(3, 3);
     pacsprite.setPosition(g.NODESIZE*pacx, g.NODESIZE*pacy);
     frame = 0;
-    speed = 0.1f;
+    speed = 1.0f;
     status = -1;
     restframe = 0;
 }

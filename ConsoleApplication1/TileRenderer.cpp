@@ -135,13 +135,15 @@ void TileRenderer::checklevel(int level) {
 }
 
 
-int TileRenderer::eating() {
+int TileRenderer::eating(pacman player) 
+{
+
     return 1;
 }
 
 
-void TileRenderer::draweating(RenderWindow& window) {
-    int count = eating();
+void TileRenderer::draweating(RenderWindow& window,pacman player) {
+    int count = eating(player);
     string number = to_string(count);
     Font font;
     font.loadFromFile("Assets/font/Prison Tattoo.ttf");   //font

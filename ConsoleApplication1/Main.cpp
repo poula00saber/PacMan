@@ -526,7 +526,7 @@ int Game_Play(RenderWindow& window, int level) {
         window.clear();
 
         tileRenderer.draw(window);
-        tileRenderer.draweating(window);
+        tileRenderer.draweating(window,player);
         player.movement();
         player.draw(window);
         myghost.movement(player, g);
