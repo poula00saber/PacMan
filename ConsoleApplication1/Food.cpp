@@ -37,14 +37,15 @@ void Food::setPosition(Vector2f pos) {
 }
 
 
-Dot::Dot(Vector2f pos) : Food(FoodType::Dot, 10, pos, sf::Vector2f(8, 8)) {}
-
-
-void Dot::draw(RenderWindow& window) {
+Dot::Dot(Vector2f pos) : Food(FoodType::Dot, 10, pos, sf::Vector2f(8, 8)) {
     if (!texture.loadFromFile("Assets/Textures/Pellet24.png")) {
         std::cerr << "Error loading texture for Dot!" << std::endl;
     }
     image.setTexture(texture);
+}
+
+void Dot::draw(RenderWindow& window) {
+   
     image.setPosition(position);
     window.draw(image);
 }
@@ -52,13 +53,14 @@ void Dot::draw(RenderWindow& window) {
 
 Skill::Skill(sf::Vector2f position) : Food(FoodType::Skill, 50, position, sf::Vector2f(8, 8)) {
     setPosition(position); 
-}
-
-void Skill::draw(RenderWindow& window) {
     if (!texture.loadFromFile("Assets/Textures/Energizer24.png")) {
         std::cerr << "Error loading texture for Skill!" << std::endl;
     }
     image.setTexture(texture);
+}
+
+void Skill::draw(RenderWindow& window) {
+   
     image.setPosition(position);
     window.draw(image);
 }

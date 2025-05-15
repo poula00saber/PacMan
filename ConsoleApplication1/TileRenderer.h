@@ -14,11 +14,12 @@ public:
     void generateFood();
     vector<unique_ptr<Food>>& getfoodList();
     void initializeFood();
+    void foodCollision();
 
 
 private:
     int tileSize;
     Texture texture0, texture1;
     Sprite sprite0, sprite1;
-    std::vector<std::unique_ptr<Food>> foodList; 
+    vector<std::unique_ptr<Food>> foodList; 
 };

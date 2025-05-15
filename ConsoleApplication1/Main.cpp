@@ -515,16 +515,49 @@ int Game_Play(RenderWindow& window, int level) {
         player.movement();
         myghost.movement(player, g);
 
-        
+        int score = 0; 
+        Font font;
+        if (!font.loadFromFile("Assets/font/Prison Tattoo.ttf")) {
+            std::cerr << "Error loading font\n";
+        }
+
         auto& foodList = tileRenderer.getfoodList();
         for (auto it = foodList.begin(); it != foodList.end(); ) {
             if (player.pacsprite.getGlobalBounds().intersects((*it)->getBounds())) {
-                it = foodList.erase(it);
+                if (dynamic_cast<Dot*>((*it).get())) {
+                    score += (*it)->getValueScore();  
+                }
+                else if (dynamic_cast<Fruit*>((*it).get())) {
+                    score += (*it)->getValueScore(); 
+                }
+                else if (dynamic_cast<Skill*>((*it).get())) {
+                    score += (*it)->getValueScore(); 
+                }
+
+                it = foodList.erase(it); 
             }
             else {
                 ++it;
             }
-        }        
+        }
+
+        Text scoreText;
+        scoreText.setFont(font);
+        scoreText.setCharacterSize(55);
+        scoreText.setFillColor(Color::White);
+        Texture scoreBackground;
+        scoreBackground.loadFromFile("Assets/images/instructions.jpg");
+        Sprite sprite1;
+        sprite1.setTexture(scoreBackground);
+        if (score < 10) scoreText.setPosition(910, 45);
+        else if (score < 100) scoreText.setPosition(890, 45);
+        else scoreText.setPosition(880, 45);
+
+        scoreText.setString(std::to_string(score));
+        sprite1.setScale(1.5f, 1.5f);
+        sprite1.setPosition(965, 40);
+        window.draw(sprite1);
+        window.draw(scoreText);
         
 
         

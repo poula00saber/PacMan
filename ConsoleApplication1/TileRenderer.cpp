@@ -3,7 +3,6 @@
 #include "Food.cpp"
 #include <iostream>
 
-
 TileRenderer::TileRenderer(int tileSize, int level)
     : tileSize(tileSize)
 {
@@ -18,7 +17,6 @@ TileRenderer::TileRenderer(int tileSize, int level)
     }
 
     sprite0.setTexture(texture0);
-    sprite1.setTexture(texture1);
 
     sprite0.setScale(
         tileSize / (float)texture0.getSize().x,
@@ -133,7 +131,7 @@ void TileRenderer::checklevel(int level) {
     }
     else {
 
-        Graph::pacmanMatrix = {
+      Graph::pacmanMatrix = {
       {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8,8,8,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
       {0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,8,8,8,8,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0},
       {0,1,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,8,8,8,8,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,1,0},
@@ -156,7 +154,7 @@ void TileRenderer::checklevel(int level) {
       {0,1,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,1,0,0,1,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,1,0},
       {0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,9,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0},
       {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
-        };
+      };
     }
 
 
