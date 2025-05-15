@@ -106,7 +106,6 @@ int main() {
                 break;
             }
             if (pagenum == 2) {
-                soundManagerr.sound[1].play();
                 pagenum = Design(window);
             }
             if (pagenum == 1) {
