@@ -41,19 +41,24 @@ void ghost::movement(pacman& player, Graph& g) {
         int nextI = nextNodeId / Graph::COLS;
         int nextJ = nextNodeId % Graph::COLS;
 
+        if (ghostSprite.getPosition().y == Graph::nodesInfo[ghostI * Graph::COLS + ghostJ].YstartPoint)
+        {
+            if (nextJ > ghostJ) {
+                status = 0;  // right
+            }
+            if (nextJ < ghostJ) {
+                status = 1;  // left
 
-        if (nextJ > ghostJ) {
-            status = 0;  // right
+            }
         }
-        else if (nextJ < ghostJ) {
-            status = 1;  // left
-
-        }
-        else if (nextI < ghostI) {
-            status = 2;  // up
-        }
-        else if (nextI > ghostI) {
-            status = 3;  // down
+        if (ghostSprite.getPosition().x == Graph::nodesInfo[ghostI * Graph::COLS + ghostJ].XstartPoint)
+        {
+            if (nextI < ghostI) {
+                status = 2;  // up
+            }
+            if (nextI > ghostI) {
+                status = 3;  // down
+            }
         }
 
 
