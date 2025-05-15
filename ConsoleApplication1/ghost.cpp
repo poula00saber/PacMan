@@ -5,11 +5,11 @@
 ghost::ghost() {
     ghostTex.loadFromFile("Assets/images/enemy_spritethis.png");
     ghostSprite.setTexture(ghostTex);
-    ghostSprite.setTextureRect(IntRect(0, 0, 20, 17));
-    ghostSprite.setScale(3, 3);
+    ghostSprite.setTextureRect(IntRect(0, 0, 30, 30));
+    ghostSprite.setScale(1.5, 1.5);
     ghostSprite.setPosition(50, 50);
     frame = 0;
-    speed = 0.05f;  //shoujd be less than or equal to pacman's speed for easy mode(morein hard)
+    speed = 1.0f;  //shoujd be less than or equal to pacman's speed for easy mode(morein hard)
     status = -1;
     moveCounter = 0;
 }
@@ -41,44 +41,44 @@ void ghost::movement(pacman& player, Graph& g) {
         int nextI = nextNodeId / Graph::COLS;
         int nextJ = nextNodeId % Graph::COLS;
 
-        
+
         if (nextJ > ghostJ) {
             status = 0;  // right
         }
         else if (nextJ < ghostJ) {
             status = 1;  // left
-            
+
         }
         else if (nextI < ghostI) {
             status = 2;  // up
         }
         else if (nextI > ghostI) {
-            status = 3;  // xown
+            status = 3;  // down
         }
-        
 
-        if (status == 0) { 
+
+        if (status == 0) {
             frame++;
             int frameIndex = frame % 2;
-            ghostSprite.setTextureRect(IntRect(frameIndex* 17, 0, 20, 17));
+            ghostSprite.setTextureRect(IntRect(frameIndex * 30, 0, 30, 30));
             ghostSprite.move(speed, 0);
         }
-        else if (status == 1) {  
+        else if (status == 1) {
             frame++;
             int frameIndex = frame % 2;
-            ghostSprite.setTextureRect(IntRect((frameIndex) * 17, 0, 20, 17));
+            ghostSprite.setTextureRect(IntRect((frameIndex + 6) * 30, 0, 30, 30));
             ghostSprite.move(-speed, 0);
         }
-        else if (status == 2) {  
+        else if (status == 2) {
             frame++;
             int frameIndex = frame % 2;
-            ghostSprite.setTextureRect(IntRect((frameIndex+2) * 17, 0, 20, 17));
+            ghostSprite.setTextureRect(IntRect((frameIndex + 4) * 30, 0, 30, 30));
             ghostSprite.move(0, -speed);
         }
-        else if (status == 3) {  
+        else if (status == 3) {
             frame++;
             int frameIndex = frame % 2;
-            ghostSprite.setTextureRect(IntRect((frameIndex+4) * 17, 0, 20, 17));
+            ghostSprite.setTextureRect(IntRect((frameIndex + 2) * 30, 0, 30, 30));
             ghostSprite.move(0, speed);
         }
     }

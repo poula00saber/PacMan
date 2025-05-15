@@ -29,7 +29,6 @@ TileRenderer::TileRenderer(int tileSize, int level)
 
 }
 
-// Draw function
 void TileRenderer::draw(RenderWindow& window) {
     for (size_t i = 0; i < Graph::pacmanMatrix.size(); ++i) {
         for (size_t j = 0; j < Graph::pacmanMatrix[i].size(); ++j) {
