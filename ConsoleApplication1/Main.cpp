@@ -112,7 +112,7 @@ int main() {
                 pagenum = instruction(window);
             }
 
-            for (int i = 1; i < 8; i++)
+            for (int i = 1; i < 9; i++)
             {
                 soundManagerr.sound[i].stop();
             }

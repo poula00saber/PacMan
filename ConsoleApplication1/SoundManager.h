@@ -20,18 +20,18 @@
 //Music menu;  sound[0]
 //Music intro;  sound[1]
 //Music eat;   sound[2]
-//Music winnLife;   sound[3]
-//Music Death;   sound[4]
-//Music eat fruit; sound[5]
-//Music pacman eaten;  sound[6]
-//music winner; sound[7]
-//music game  sound[8]
+//Music eat fruit; sound[3]
+//music scatter ghost  sound[4]
+//Music siren;  sound[5]
+//Music winnLife;   sound[6]
+//Music Death;   sound[7]
+//music winner; sound[8]
 class SoundManager
 {
 
 public:
 
-    Music sound[8];
+    Music sound[9];
 
     bool initialize() {
         if (!sound[0].openFromFile("Assets/Sounds/menu.wav")) {
@@ -65,7 +65,7 @@ public:
             return false;
         }
         /*
-        if (!sound[6].openFromFile("Assets/Sounds/GhostDeath.wav"))
+        if (!sound[6].openFromFile("Assets/Sounds/pacmanEaten.wav"))
         {
             cout << "ERROR: Can't load sound pacmanEaten.wav\n";
             return false;
@@ -75,14 +75,11 @@ public:
             cout << "ERROR: Can't load sound winner.wav\n";
             return false;
         }
-        if (!sound[8].openFromFile("Assets/Sounds/game.wav")) {
-            cout << "ERROR: Can't load sound game.wav\n";
+        if (!sound[8].openFromFile("Assets/Sounds/GhostDeath.wav")) {
+            cout << "ERROR: Can't load sound GhostDeath.wav\n";
             return false;
         }
-        if (!sound[9].openFromFile("Assets/Sounds/GhostEscaping.wav")) {
-            cout << "ERROR: Can't load sound game.wav\n";
-            return false;
-        }*/
+        */
         return true;
     }
 
