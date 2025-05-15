@@ -44,12 +44,12 @@ public:
              cout << "ERROR: Can't load sound intro.wav\n";
              return false;
          }
-         /*
+         
          if (!sound[2].openFromFile("Assets/Sounds/eat.wav")) {
              cout << "ERROR: Can't load sount eat.wav\n";
              return false;
          }
-
+         /*
          if (!sound[3].openFromFile("Assets/Sounds/winLife.wav")) {
              cout << "ERROR: Can't load  sound winLife.wav\n";
              return false;

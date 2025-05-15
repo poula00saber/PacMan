@@ -48,11 +48,11 @@ using namespace sf;
 
 int Design(RenderWindow& window);
 int instruction(RenderWindow& window);
-int Game_Play(RenderWindow& window,int level);
+int Game_Play(RenderWindow& window,int level, SoundManager& soundManagerr);
 void drawMenu(RenderWindow& window, Menu& menu, Sprite& bg);
 void handleEvents(RenderWindow& window, Menu& menu, int& pagenum);
 void numphoto_checkMouseHover(RenderWindow& window, RectangleShape numplay[], int& selectedOption);
-void select_checkMouseHover(RenderWindow& window, Sprite difficulty[], int& selectedOption);
+void select_checkMouseHover(RenderWindow& window, Sprite difficulty[], int numphoto, int& selectedOption);
 int SelectDifficulty(RenderWindow& window);
 
 
@@ -97,7 +97,7 @@ int main() {
                 int level =SelectDifficulty(window);
                 soundManagerr.sound[0].stop();
                 soundManagerr.sound[1].play();
-                pagenum = Game_Play(window,level);
+                pagenum = Game_Play(window,level,soundManagerr);
                 soundManagerr.sound[0].play();
             }
             if (pagenum == -1) {
@@ -490,7 +490,7 @@ int SelectDifficulty(RenderWindow& window) {
 }
 
 
-int Game_Play(RenderWindow& window, int level) {
+int Game_Play(RenderWindow& window, int level, SoundManager& soundManagerr) {
     window.setFramerateLimit(60);
 
     Graph g;
@@ -513,7 +513,8 @@ int Game_Play(RenderWindow& window, int level) {
     scoreText.setFillColor(Color::White);
 
     auto& foodList = tileRenderer.getfoodList();
-
+    soundManagerr.sound[5].setLoop(true);
+    soundManagerr.sound[5].play();
     // Game loop
     while (window.isOpen()) {
         Event event;
@@ -527,7 +528,14 @@ int Game_Play(RenderWindow& window, int level) {
 
         for (auto it = foodList.begin(); it != foodList.end(); ) {
             if (player.pacsprite.getGlobalBounds().intersects((*it)->getBounds())) {
-                score += (*it)->getValueScore();  // Simple, clean
+                if ((*it)->getValueScore()==1)soundManagerr.sound[2].play();
+                else if ((*it)->getValueScore() == 10)soundManagerr.sound[3].play();
+                else {
+                    soundManagerr.sound[4].setLoop(true);
+                    soundManagerr.sound[4].play();
+                    soundManagerr.sound[5].stop();
+                }
+                score += (*it)->getValueScore();
                 it = foodList.erase(it);
             } else {
                 ++it;

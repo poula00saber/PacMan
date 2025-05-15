@@ -9,7 +9,7 @@ ghost::ghost() {
     ghostSprite.setScale(1.5, 1.5);
     ghostSprite.setPosition(50, 50);
     frame = 0;
-    speed = 1.0f;  //shoujd be less than or equal to pacman's speed for easy mode(morein hard)
+    speed = 1.0f;  
     status = -1;
     moveCounter = 0;
 }

@@ -56,13 +56,13 @@ void TileRenderer::initializeFood() {
                 int randomChoice = rand() % 100;
 
                 if (randomChoice < 5) {
-                    foodList.push_back(std::make_unique<Fruit>(position));
+                    foodList.push_back(make_unique<Fruit>(position));
                 }
                 else if (randomChoice < 10) {
-                    foodList.push_back(std::make_unique<Skill>(position));
+                    foodList.push_back(make_unique<Skill>(position));
                 }
                 else {
-                    foodList.push_back(std::make_unique<Dot>(position));
+                    foodList.push_back(make_unique<Dot>(position));
                 }
             }
         }
