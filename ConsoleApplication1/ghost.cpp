@@ -7,7 +7,7 @@ ghost::ghost() {
     ghostSprite.setTexture(ghostTex);
     ghostSprite.setTextureRect(IntRect(0, 0, 30, 30));
     ghostSprite.setScale(1.5, 1.5);
-    ghostSprite.setPosition(50, 50);
+    ghostSprite.setPosition(g.NODESIZE, g.NODESIZE);
     frame = 0;
     speed = 1.0f;  
     status = -1;
@@ -57,29 +57,34 @@ void ghost::movement(pacman& player, Graph& g) {
         }
 
 
-        if (status == 0) {
+
+
+        if (status == 0 && (g.pacmanMatrix[ghostI][ghostJ + 1] != 0 || (ghostSprite.getPosition().x != Graph::nodesInfo[ghostI * Graph::COLS + ghostJ].XstartPoint && ghostSprite.getPosition().y == Graph::nodesInfo[ghostI * Graph::COLS + ghostJ].YstartPoint && g.pacmanMatrix[ghostI][ghostJ + 1] == 0))) {  // Right
             frame++;
             int frameIndex = frame % 2;
             ghostSprite.setTextureRect(IntRect(frameIndex * 30, 0, 30, 30));
             ghostSprite.move(speed, 0);
         }
-        else if (status == 1) {
+        else if (status == 1 && (g.pacmanMatrix[ghostI][ghostJ - 1] != 0 || (ghostSprite.getPosition().x != Graph::nodesInfo[ghostI * Graph::COLS + ghostJ].XstartPoint && ghostSprite.getPosition().y == Graph::nodesInfo[ghostI * Graph::COLS + ghostJ].YstartPoint && g.pacmanMatrix[ghostI][ghostJ - 1] == 0))) {  // Left
             frame++;
             int frameIndex = frame % 2;
             ghostSprite.setTextureRect(IntRect((frameIndex + 6) * 30, 0, 30, 30));
             ghostSprite.move(-speed, 0);
         }
-        else if (status == 2) {
+        else if (status == 2 && (g.pacmanMatrix[ghostI - 1][ghostJ] != 0 || (ghostSprite.getPosition().x == Graph::nodesInfo[ghostI * Graph::COLS + ghostJ].XstartPoint && ghostSprite.getPosition().y != Graph::nodesInfo[ghostI * Graph::COLS + ghostJ].YstartPoint && g.pacmanMatrix[ghostI - 1][ghostJ] == 0))) {  // Up
             frame++;
             int frameIndex = frame % 2;
             ghostSprite.setTextureRect(IntRect((frameIndex + 4) * 30, 0, 30, 30));
             ghostSprite.move(0, -speed);
         }
-        else if (status == 3) {
+        else if (status == 3 && (g.pacmanMatrix[ghostI + 1][ghostJ] != 0 || (ghostSprite.getPosition().x == Graph::nodesInfo[ghostI * Graph::COLS + ghostJ].XstartPoint && ghostSprite.getPosition().y != Graph::nodesInfo[ghostI * Graph::COLS + ghostJ].YstartPoint && g.pacmanMatrix[ghostI + 1][ghostJ] == 0))) {  // Down
             frame++;
             int frameIndex = frame % 2;
             ghostSprite.setTextureRect(IntRect((frameIndex + 2) * 30, 0, 30, 30));
             ghostSprite.move(0, speed);
+        }
+        else {
+            status = -1;
         }
     }
 }

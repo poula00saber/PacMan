@@ -10,7 +10,7 @@ pacman::pacman(int pacx,int pacy) {
     pacsprite.setScale(3, 3);
     pacsprite.setPosition(g.NODESIZE*pacx, g.NODESIZE*pacy);
     frame = 0;
-    speed = 4.0f;
+    speed = 2.0f;
     status = -1;
     restframe = 0;
 }
@@ -24,12 +24,12 @@ void pacman::movement() {
         j = Graph::COLS - 1;
     }
     else if (j == Graph::COLS - 1 && status == 0 && g.pacmanMatrix[i][0] != 0) {
-        pacsprite.setPosition(Graph::nodesInfo[i * Graph::COLS].XendPoint, pacsprite.getPosition().y);
+        pacsprite.setPosition(Graph::nodesInfo[i * Graph::COLS].XstartPoint, pacsprite.getPosition().y);
         j = 0;
     }
 
     if (i == 0 && status == 2 && g.pacmanMatrix[Graph::ROWS - 1][j] != 0) {
-        pacsprite.setPosition(pacsprite.getPosition().x, Graph::nodesInfo[(Graph::ROWS - 1) * Graph::COLS + j].YendPoint);
+        pacsprite.setPosition(pacsprite.getPosition().x, Graph::nodesInfo[(Graph::ROWS - 1) * Graph::COLS + j].YstartPoint);
         i = Graph::ROWS - 1;
     }
     else if (i == Graph::ROWS - 1 && status == 3 && g.pacmanMatrix[0][j] != 0) {
@@ -37,42 +37,48 @@ void pacman::movement() {
         i = 0;
     }
 
-    // Handle keyboard input to change direction
-    if (Keyboard::isKeyPressed(Keyboard::Right) && g.pacmanMatrix[i][j + 1] != 0) {
 
-        status = 0;
+    if ( pacsprite.getPosition().y == Graph::nodesInfo[i * Graph::COLS + j].YstartPoint)
+    {
+        if (Keyboard::isKeyPressed(Keyboard::Right) && g.pacmanMatrix[i][j + 1] != 0) {
+
+            status = 0;
+        }
+        if (Keyboard::isKeyPressed(Keyboard::Left) && g.pacmanMatrix[i][j - 1] != 0) {
+            status = 1;
+        }
     }
-    else if (Keyboard::isKeyPressed(Keyboard::Left) && g.pacmanMatrix[i][j - 1] != 0) {
-        status = 1;
-    }
-    else if (Keyboard::isKeyPressed(Keyboard::Up) && g.pacmanMatrix[i - 1][j] != 0) {
-        status = 2;
-    }
-    else if (Keyboard::isKeyPressed(Keyboard::Down) && g.pacmanMatrix[i + 1][j] != 0) {
-        status = 3;
+    if (pacsprite.getPosition().x == Graph::nodesInfo[i * Graph::COLS + j].XstartPoint)
+    {
+        if (Keyboard::isKeyPressed(Keyboard::Up) && g.pacmanMatrix[i - 1][j] != 0) {
+            status = 2;
+        }
+        if (Keyboard::isKeyPressed(Keyboard::Down) && g.pacmanMatrix[i + 1][j] != 0) {
+            status = 3;
+        }
     }
 
 
 
-    if (status == 0 && (g.pacmanMatrix[i][j + 1] != 0 || (pacsprite.getPosition().x <= Graph::nodesInfo[i * Graph::COLS + j].Xcenter && g.pacmanMatrix[i][j] != 0))) {  // Right
+    if (status == 0 && (g.pacmanMatrix[i][j + 1] != 0 || (pacsprite.getPosition().x != Graph::nodesInfo[i * Graph::COLS + j].XstartPoint&& pacsprite.getPosition().y == Graph::nodesInfo[i * Graph::COLS + j].YstartPoint && g.pacmanMatrix[i][j+1] == 0))) {  // Right
         frame++;
         pacsprite.setTextureRect(IntRect((frame % 5) * 16, 0, 16, 16));
         pacsprite.move(speed, 0);
         restframe = 0;
     }
-    else if (status == 1 && (g.pacmanMatrix[i][j - 1] != 0 || (pacsprite.getPosition().x >= Graph::nodesInfo[i * Graph::COLS + j].Xcenter && g.pacmanMatrix[i][j] != 0))) {  // Left
+    else if (status == 1 && (g.pacmanMatrix[i][j - 1] != 0 || (pacsprite.getPosition().x != Graph::nodesInfo[i * Graph::COLS + j].XstartPoint && pacsprite.getPosition().y == Graph::nodesInfo[i * Graph::COLS + j].YstartPoint && g.pacmanMatrix[i][j -1] == 0))) {  // Left
         frame++;
         pacsprite.setTextureRect(IntRect((frame % 5) * 16, 2 * 16, 16, 16));
         pacsprite.move(-speed, 0);
         restframe = 2;
     }
-    else if (status == 2 && (g.pacmanMatrix[i - 1][j] != 0 || (pacsprite.getPosition().y >= Graph::nodesInfo[i * Graph::COLS + j].Ycenter && g.pacmanMatrix[i][j] != 0))) {  // Up
+    else if (status == 2 && (g.pacmanMatrix[i - 1][j] != 0  || (pacsprite.getPosition().x == Graph::nodesInfo[i * Graph::COLS + j].XstartPoint && pacsprite.getPosition().y != Graph::nodesInfo[i * Graph::COLS + j].YstartPoint && g.pacmanMatrix[i-1][j] == 0))) {  // Up
         frame++;
         pacsprite.setTextureRect(IntRect((frame % 5) * 16, 16, 16, 16));
         pacsprite.move(0, -speed);
         restframe = 1;
     }
-    else if (status == 3 && (g.pacmanMatrix[i + 1][j] != 0 || (pacsprite.getPosition().y <= Graph::nodesInfo[i * Graph::COLS + j].Ycenter && g.pacmanMatrix[i][j] != 0))) {  // Down
+    else if (status == 3 && (g.pacmanMatrix[i + 1][j] != 0  || (pacsprite.getPosition().x == Graph::nodesInfo[i * Graph::COLS + j].XstartPoint && pacsprite.getPosition().y != Graph::nodesInfo[i * Graph::COLS + j].YstartPoint && g.pacmanMatrix[i+1][j ] == 0))) {  // Down
         frame++;
         pacsprite.setTextureRect(IntRect((frame % 5) * 16, 3 * 16, 16, 16));
         pacsprite.move(0, speed);
