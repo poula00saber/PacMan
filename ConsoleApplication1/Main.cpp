@@ -48,7 +48,7 @@ using namespace sf;
 
 int Design(RenderWindow& window);
 int instruction(RenderWindow& window);
-int Game_Play(RenderWindow& window,int level, SoundManager& soundManagerr);
+int Game_Play(RenderWindow& window, int level, SoundManager& soundManagerr);
 void drawMenu(RenderWindow& window, Menu& menu, Sprite& bg);
 void handleEvents(RenderWindow& window, Menu& menu, int& pagenum);
 void numphoto_checkMouseHover(RenderWindow& window, RectangleShape numplay[], int& selectedOption);
@@ -80,8 +80,8 @@ int main() {
     Sprite bg;
     bg.setPosition(0, -200);
     bg.setTexture(mainmenubg);
-   
-   
+
+
     while (true) {
 
         if (pagenum == 1000) {
@@ -94,10 +94,10 @@ int main() {
                 drawMenu(window, menu, bg);
             }
             if (pagenum == 0) {
-                int level =SelectDifficulty(window);
+                int level = SelectDifficulty(window);
                 soundManagerr.sound[0].stop();
                 soundManagerr.sound[1].play();
-                pagenum = Game_Play(window,level,soundManagerr);
+                pagenum = Game_Play(window, level, soundManagerr);
                 soundManagerr.sound[0].play();
             }
             if (pagenum == -1) {
@@ -492,7 +492,7 @@ int SelectDifficulty(RenderWindow& window) {
 
 int Game_Play(RenderWindow& window, int level, SoundManager& soundManagerr) {
     window.setFramerateLimit(60);
-
+    bool checkstart = 1;
     Graph g;
     pacman player(19, 20);
     TileRenderer tileRenderer(48, level);
@@ -505,7 +505,7 @@ int Game_Play(RenderWindow& window, int level, SoundManager& soundManagerr) {
     Font font;
     font.loadFromFile("Assets/font/Prison Tattoo.ttf");
 
-    
+
 
     Text scoreText;
     scoreText.setFont(font);
@@ -513,8 +513,8 @@ int Game_Play(RenderWindow& window, int level, SoundManager& soundManagerr) {
     scoreText.setFillColor(Color::White);
 
     auto& foodList = tileRenderer.getfoodList();
-    soundManagerr.sound[5].setLoop(true);
-    soundManagerr.sound[5].play();
+
+
     // Game loop
     while (window.isOpen()) {
         Event event;
@@ -528,16 +528,18 @@ int Game_Play(RenderWindow& window, int level, SoundManager& soundManagerr) {
 
         for (auto it = foodList.begin(); it != foodList.end(); ) {
             if (player.pacsprite.getGlobalBounds().intersects((*it)->getBounds())) {
-                if ((*it)->getValueScore()==1)soundManagerr.sound[2].play();
-                else if ((*it)->getValueScore() == 10)soundManagerr.sound[3].play();
-                else {
-                    soundManagerr.sound[4].setLoop(true);
-                    soundManagerr.sound[4].play();
-                    soundManagerr.sound[5].stop();
+                if ((*it)->getValueScore() == 1)soundManagerr.sound[2].play();
+                if ((*it)->getValueScore() == 20)soundManagerr.sound[3].play();
+                if ((*it)->getValueScore() == 10)
+                {
+                     soundManagerr.sound[4].setLoop(true);
+                     soundManagerr.sound[4].play();
+                     soundManagerr.sound[5].stop();
                 }
                 score += (*it)->getValueScore();
                 it = foodList.erase(it);
-            } else {
+            }
+            else {
                 ++it;
             }
         }
@@ -555,5 +557,14 @@ int Game_Play(RenderWindow& window, int level, SoundManager& soundManagerr) {
         myghost.draw(window);
         window.draw(scoreText);
         window.display();
+        if (checkstart) {
+            
+				Sleep(4300);
+                soundManagerr.sound[5].setLoop(true);
+                soundManagerr.sound[5].play();
+                checkstart = 0;
+            
+        }
+
     }
 }

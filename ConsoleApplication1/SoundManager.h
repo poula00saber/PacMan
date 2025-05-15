@@ -39,54 +39,51 @@ public:
             return false;
         }
 
-         if (!sound[1].openFromFile("Assets/Sounds/intro.wav"))
-         {
-             cout << "ERROR: Can't load sound intro.wav\n";
-             return false;
-         }
-         
-         if (!sound[2].openFromFile("Assets/Sounds/eat.wav")) {
-             cout << "ERROR: Can't load sount eat.wav\n";
-             return false;
-         }
-         /*
-         if (!sound[3].openFromFile("Assets/Sounds/winLife.wav")) {
-             cout << "ERROR: Can't load  sound winLife.wav\n";
-             return false;
-         }
+        if (!sound[1].openFromFile("Assets/Sounds/intro.wav"))
+        {
+            cout << "ERROR: Can't load sound intro.wav\n";
+            return false;
+        }
 
-         if (!sound[4].openFromFile("Assets/Sounds/PacDeath.wav")) {
-             cout << "ERROR: Can't load sound Death.wav\n";
-             return false;
-         }
+        if (!sound[2].openFromFile("Assets/Sounds/eat.wav")) {
+            cout << "ERROR: Can't load sount eat.wav\n";
+            return false;
+        }
 
-         if (!sound[5].openFromFile("Assets/Sounds/eatFruit.wav")) {
-             cout << "ERROR: Can't load sound eatFruit.wav\n";
-             return false;
-         }
+        if (!sound[3].openFromFile("Assets/Sounds/eatFruit.wav")) {
+            cout << "ERROR: Can't load  sound winLife.wav\n";
+            return false;
+        }
 
-         if (!sound[6].openFromFile("Assets/Sounds/GhostDeath.wav"))
-         {
-             cout << "ERROR: Can't load sound pacmanEaten.wav\n";
-             return false;
-         }
+        if (!sound[4].openFromFile("Assets/Sounds/scatter ghost.wav")) {
+            cout << "ERROR: Can't load sound Death.wav\n";
+            return false;
+        }
 
-         if (!sound[7].openFromFile("Assets/Sounds/winner.wav")) {
-             cout << "ERROR: Can't load sound winner.wav\n";
-             return false;
-         }
-         if (!sound[8].openFromFile("Assets/Sounds/game.wav")) {
-             cout << "ERROR: Can't load sound game.wav\n";
-             return false;
-         }
-         if (!sound[9].openFromFile("Assets/Sounds/GhostEscaping.wav")) {
-             cout << "ERROR: Can't load sound game.wav\n";
-             return false;
-         }*/
+        if (!sound[5].openFromFile("Assets/Sounds/siren.wav")) {
+            cout << "ERROR: Can't load sound eatFruit.wav\n";
+            return false;
+        }
+        /*
+        if (!sound[6].openFromFile("Assets/Sounds/GhostDeath.wav"))
+        {
+            cout << "ERROR: Can't load sound pacmanEaten.wav\n";
+            return false;
+        }
+
+        if (!sound[7].openFromFile("Assets/Sounds/winner.wav")) {
+            cout << "ERROR: Can't load sound winner.wav\n";
+            return false;
+        }
+        if (!sound[8].openFromFile("Assets/Sounds/game.wav")) {
+            cout << "ERROR: Can't load sound game.wav\n";
+            return false;
+        }
+        if (!sound[9].openFromFile("Assets/Sounds/GhostEscaping.wav")) {
+            cout << "ERROR: Can't load sound game.wav\n";
+            return false;
+        }*/
         return true;
     }
 
 };
-
-
-
