@@ -10,16 +10,13 @@ public:
     TileRenderer( int tileSize,int level);
     void draw(RenderWindow& window);
     void checklevel(int value);
-    int eating();
-    void generateFood();
     vector<unique_ptr<Food>>& getfoodList();
     void initializeFood();
-    void foodCollision();
 
 
 private:
     int tileSize;
-    Texture texture0, texture1;
-    Sprite sprite0, sprite1;
-    vector<std::unique_ptr<Food>> foodList; 
+    Texture texture0;
+    Sprite sprite0;
+    vector<unique_ptr<Food>> foodList; 
 };

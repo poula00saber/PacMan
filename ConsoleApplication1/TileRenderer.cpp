@@ -11,21 +11,13 @@ TileRenderer::TileRenderer(int tileSize, int level)
     if (!texture0.loadFromFile("Assets/Textures/48x48Map.png")) {
         cerr << "Failed to load texture0 from: " << " texturePath0" << endl;
     }
-    if (!texture1.loadFromFile("Assets/images/PMSprites.png")) {
-
-        cerr << "Failed to load texture0 from: " << "texturePath1" << endl;
-    }
-
     sprite0.setTexture(texture0);
 
     sprite0.setScale(
         tileSize / (float)texture0.getSize().x,
         tileSize / (float)texture0.getSize().y
     );
-    sprite1.setScale(
-        tileSize / (float)texture1.getSize().x,
-        tileSize / (float)texture1.getSize().y
-    );
+    
 
 }
 

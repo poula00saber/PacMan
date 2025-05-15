@@ -75,7 +75,7 @@ Fruit::Fruit(Vector2f pos)
 
     // Randomly select a fruit type ONCE when created
     fruitImageIndex = rand() % 8;  // Assuming 8 fruits in the sprite sheet
-    image.setTextureRect(sf::IntRect(fruitImageIndex * 32, 0, 32, 32));
+    image.setTextureRect(sf::IntRect(fruitImageIndex * 48, 0, 48, 48));
 }
 
 void Fruit::draw(RenderWindow& window) {
