@@ -15,12 +15,21 @@ public:
         dataArray.clear();  
         json dataScore;
         int i = 0;
+        stack<Score> reversed;
         while (!scores.empty() && i < 10)
         {
-            dataScore["Value"] = scores.top().value;
-            dataScore["userName"] = scores.top().userName;
-            dataArray.push_back(dataScore);
+            reversed.push(scores.top());
             scores.pop();
+            i++;
+        }
+
+
+        while(!reversed.empty())
+        {
+            dataScore["Value"] = reversed.top().value;
+            dataScore["userName"] = reversed.top().userName;
+            dataArray.push_back(dataScore);
+            reversed.pop();
             i++;
         }
         std::ofstream o("scores.json");
@@ -33,25 +42,19 @@ public:
     {
         std::ifstream input("scores.json");
         stack<Score> scores;
-        stack<Score> copy;
-
+        
         input >> dataArray;
         int i = 0;
 
         for (json j : dataArray )
         {
             Score temp = Score(j["Value"], j["userName"]);
-            copy.push(temp);
+            scores.push(temp);
             if (i>10)
             {
                 break;
             }
             i++;
-        }
-        while (!copy.empty())
-        {
-            scores.push(copy.top());
-            copy.pop();
         }
         input.close();
         return scores;
