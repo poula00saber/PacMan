@@ -592,10 +592,10 @@ int Game_Play(RenderWindow& window, int level,string& name, SoundManager& soundM
     Graph g;
     pacman player(19, 20);
     TileRenderer tileRenderer(48, level);
-    ghost myghost(18,11);
-    ghost myghost1(17, 11);
-    ghost myghost2(21, 11);
-    ghost myghost3(22, 11);
+    ghost myghost(18,11, "Assets/images/red.png");
+    ghost myghost1(17, 11, "Assets/images/pinky.png");
+    ghost myghost2(21, 11, "Assets/images/babyblue.png");
+    ghost myghost3(22, 11, "Assets/images/orange.png");
 
 
     Clock clock;
