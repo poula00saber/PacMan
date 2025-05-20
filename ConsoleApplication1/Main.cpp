@@ -716,9 +716,6 @@ int Game_Play(RenderWindow& window, int level,string& name, SoundManager& soundM
             cout << "Dead\n";
             return meungameplay(window, false, level, player.score.userName, player.score.value);
         }
-        if (tileRenderer.getfoodList().empty()) {
-            s.push(player.score);
-            score_file.jsonWrite(s);
         if (tileRenderer.getfoodList().empty()) {            
             s.push(player.score);    
             cout << "winner\n";
