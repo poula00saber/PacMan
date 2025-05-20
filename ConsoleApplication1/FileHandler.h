@@ -12,8 +12,9 @@ public:
     nlohmann::json dataArray;
 
     void jsonWrite(stack<Score> scores) {
+        dataArray.clear();  
         json dataScore;
-        int i = 0; 
+        int i = 0;
         while (!scores.empty() && i < 10)
         {
             dataScore["Value"] = scores.top().value;
@@ -23,21 +24,34 @@ public:
             i++;
         }
         std::ofstream o("scores.json");
-
         o << setw(4) << dataArray << endl;
         o.close();
     }
+
 
     stack<Score> jsonRead()
     {
         std::ifstream input("scores.json");
         stack<Score> scores;
-        input >> dataArray;
+        stack<Score> copy;
 
-        for (json j : dataArray)
+        input >> dataArray;
+        int i = 0;
+
+        for (json j : dataArray )
         {
             Score temp = Score(j["Value"], j["userName"]);
-            scores.push(temp);
+            copy.push(temp);
+            if (i>10)
+            {
+                break;
+            }
+            i++;
+        }
+        while (!copy.empty())
+        {
+            scores.push(copy.top());
+            copy.pop();
         }
         input.close();
         return scores;
