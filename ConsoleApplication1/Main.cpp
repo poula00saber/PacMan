@@ -148,6 +148,7 @@ int main() {
                 soundManagerr.sound[i].stop();
             }
         }
+        score_file.jsonWrite(s);
     }
     return 0;
 }
@@ -634,7 +635,9 @@ int Game_Play(RenderWindow& window, int level,string& name, SoundManager& soundM
             if (event.type == Event::Closed) window.close();
             if (Keyboard::isKeyPressed(Keyboard::Escape)) return 1000;
         }
+
         player.movement();
+
         myghost.movement(player, g);
         if (numghost >= 2)myghost1.movement(player, g);
         if (numghost >= 3)myghost2.movement(player, g);
@@ -710,14 +713,14 @@ int Game_Play(RenderWindow& window, int level,string& name, SoundManager& soundM
         if (player.isDead) {
             soundManagerr.sound[6].stop();
             s.push(player.score);
-            score_file.jsonWrite(s);
             cout << "Dead\n";
             return meungameplay(window, false, level, player.score.userName, player.score.value);
         }
         if (tileRenderer.getfoodList().empty()) {
-            
             s.push(player.score);
             score_file.jsonWrite(s);
+        if (tileRenderer.getfoodList().empty()) {            
+            s.push(player.score);    
             cout << "winner\n";
             return meungameplay(window, true, level, player.score.userName, player.score.value);
         }
@@ -768,6 +771,12 @@ int score_player(RenderWindow& window) {
         score.pop();
         i++;
     }
+    
+    while (!score.empty())
+    {
+        score.pop();
+    }
+
     while (window.isOpen())
     {
         Event event;

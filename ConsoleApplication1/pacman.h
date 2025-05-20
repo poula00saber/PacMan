@@ -16,8 +16,8 @@ public:
     Sprite pacsprite;
     int nextStatus;
 
-    bool isDying;
-    bool isDead;
+    bool isDying = false;
+    bool isDead = false;
     float frameDuration = 0.3f;
     Score score;
 
