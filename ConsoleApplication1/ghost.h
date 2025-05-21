@@ -21,11 +21,13 @@ public:
     vector<int> path;
     bool isVisible = 1;
     int homeId = 18 * Graph::COLS + 11;
-
+    int counttime;
+    bool isFrozen;
+    Clock freezeClock;
 public:
     int status;
     Texture ghostWeakShape;
-    Texture ghostTex;
+    Texture ghostTex, ghostEyes;
     int frame;
     float speed;
     Graph g;
