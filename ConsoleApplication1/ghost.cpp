@@ -42,7 +42,7 @@ void ghost::movement(pacman& player, Graph& g) {
             isDying = 1;
             path = g.bfs(ghostNodeId, homeId);
             moveCounter = 20;  // Force path recalculation immediately
-            std::cout << "Ghost is dying. Current node: " << ghostNodeId << ", Target node: " << homeId << std::endl;
+           // std::cout << "Ghost is dying. Current node: " << ghostNodeId << ", Target node: " << homeId << std::endl<<"PacManNode: "<<pacmanNodeId;
 
         }
         else {
@@ -84,10 +84,11 @@ void ghost::movement(pacman& player, Graph& g) {
         else if (isDying)
         {
             targetNodelId=homeId;
+			cout << "ghostId: " << ghostNodeId << " homeId: " << homeId << endl;
 			speed = 5.0f;
             if (ghostNodeId == homeId)
             {
-
+               // ghostSprite.setPosition(g.NODESIZE * 11, g.NODESIZE * 18);
 				isFrozen = 1;
                 isDying = 0;
                 freezeClock.restart();
@@ -103,9 +104,9 @@ void ghost::movement(pacman& player, Graph& g) {
 				isFrozen = 0;
                 vulnerable = 0;
             }
-            else {
+            /*else {
                 return;  
-            }
+            }*/
 
         }
         else {

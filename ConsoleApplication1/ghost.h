@@ -21,7 +21,7 @@ public:
     vector<int> path;
     bool isVisible = 1;
     bool isFrozen = 0;
-    int homeId = 18 * Graph::COLS + 11;
+    int homeId = 11* Graph::COLS + 20;
     Clock freezeClock;
     bool freezeStarts = 0;
 
