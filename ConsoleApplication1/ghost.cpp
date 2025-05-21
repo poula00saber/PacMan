@@ -14,8 +14,18 @@ ghost::ghost() {
     moveCounter = 0;
 }
 
+<<<<<<< Updated upstream
 void ghost::movement(pacman& player, Graph& g) {
     // get char current pos
+=======
+void ghost::setVulnerable() {
+    vulnerable = true;
+    vulnerableClock.restart();    
+    ghostSprite.setTexture(ghostWeakShape);
+    ghostSprite.setTextureRect(IntRect(0, 0, 30, 30));
+}
+void ghost::movement(pacman& player, Graph& g,int level) {
+>>>>>>> Stashed changes
     Vector2f ghostPos = ghostSprite.getPosition();
     Vector2f pacmanPos = player.pacsprite.getPosition();
 
@@ -27,11 +37,104 @@ void ghost::movement(pacman& player, Graph& g) {
 
     int ghostNodeId = ghostI * Graph::COLS + ghostJ;
     int pacmanNodeId = pacmanI * Graph::COLS + pacmanJ;
+<<<<<<< Updated upstream
+=======
+
+    //this is to detect ghost stuck in a node
+    if (ghostNodeId == lastVisitedNode) {
+        stationaryCounter++;
+    }
+    else {
+        stationaryCounter = 0;
+        lastVisitedNode = ghostNodeId;
+    }  
+
+    if (checkCollision(player)) {
+            if (vulnerable) {
+                isDying = 1;
+                path = g.bfs(ghostNodeId, homeId, level);
+                moveCounter = 20;
+                ghostSprite.setTexture(ghostEyes);
+            }
+            else {
+                ghost::isVisible = false;
+                player.pacsprite.setTexture(player.pacDeath);
+                player.isDying = 1;
+            }
+        
+    }   
+>>>>>>> Stashed changes
 
     moveCounter++;
     if (moveCounter >= 20) {  // calc new path every 20 frames(3shan el ghost maydokhsh)
+<<<<<<< Updated upstream
         path = g.bfs(ghostNodeId, pacmanNodeId);
         moveCounter = 0;
+=======
+        int targetNodelId; 
+        if (vulnerable && !isDying) {
+            float maxDist = -1;
+            int farthestNode = ghostNodeId;
+            for (int i = 0; i < Graph::ROWS; i++) {
+                for (int j = 0; j < Graph::COLS; j++) {
+                    if (g.pacmanMatrix[i][j] != 0) {
+                        float distX = static_cast<float> (j * Graph::NODESIZE) - pacmanPos.x;
+                        float distY = static_cast<float> (i * Graph::NODESIZE) - pacmanPos.y;
+                        float dist = distX * distX + distY * distY;
+                        if (dist > maxDist) {
+                            maxDist = dist;
+                            farthestNode = i * Graph::COLS + j;
+                        }
+                    }
+                }
+            }
+            targetNodelId = farthestNode;
+            path = g.bfs(ghostNodeId, targetNodelId, level);
+            moveCounter = 0;
+        }
+        else if (isDying) {
+            targetNodelId = homeId;
+            speed = 1.0f;
+            if (ghostNodeId == homeId) {
+                isFrozen = 1;
+                isDying = 0;
+                freezeClock.restart();
+                ghostSprite.setTexture(ghostTex);
+				path.clear();
+            }
+            else {
+                path = g.bfs(ghostNodeId, targetNodelId, level);
+                moveCounter = 0;
+            }
+        }
+        else if (isFrozen) {
+            ghostSprite.move(0, 0);
+            speed = 0.0f;
+			cout << counttime << endl;
+            if (freezeClock.getElapsedTime().asSeconds() >= 0.5f) {
+                counttime++;
+                freezeClock.restart();
+            }
+            if (counttime>10)
+            {
+                speed = 1.0f;
+                isFrozen = 0;
+                vulnerable = 0;
+                counttime = 0;
+            }
+        }
+        else {
+            targetNodelId = pacmanNodeId;
+            path = g.bfs(ghostNodeId, targetNodelId, level);
+            moveCounter = 0;
+        }
+
+        if (level == 0) {
+            path = g.bfs(ghostNodeId, targetNodelId, level);
+        }
+        else if (level == 1)
+            path = g.a_star(ghostNodeId, targetNodelId);
+>>>>>>> Stashed changes
     }
 
     // a valid path with at lEAST one node
@@ -90,6 +193,17 @@ bool ghost::checkCollision(pacman& player) {
 
     // very basic logic i'll edit it soon
     return ghostBounds.intersects(pacmanBounds);
+}
+int ghost::countRemainingFood(const std::vector<std::unique_ptr<Food>>& foodList) {
+    int count = 0;
+    for (const auto& food : foodList) {
+        if (!food->eaten()) count++;
+    }
+    return count;
+}
+
+bool ghost::isStuck() const {
+    return stationaryCounter > 100;
 }
 
 void ghost::draw(RenderWindow& window) {

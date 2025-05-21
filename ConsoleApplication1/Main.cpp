@@ -500,7 +500,43 @@ int Game_Play(RenderWindow& window, int level) {
     
     tileRenderer.initializeFood(); //Create food for level
 
+<<<<<<< Updated upstream
     
+=======
+
+    Clock clock;
+    int numghost = 1;
+    int countclock = 0;
+    tileRenderer.initializeFood();
+
+    // Score setup
+    player.score.value = 0;
+    player.score.userName = name;
+    Font font;
+    font.loadFromFile("Assets/font/Prison Tattoo.ttf");
+
+
+
+    Text scoreText;
+    scoreText.setFont(font);
+    scoreText.setCharacterSize(55);
+    scoreText.setFillColor(Color::White);
+
+
+    Text t;
+
+    t.setFont(font);
+    t.setCharacterSize(40);
+    t.setFillColor(Color::White);
+    t.setPosition(920 - (name.size() * 6), 0);
+    t.setString(name);
+
+    auto& foodList = tileRenderer.getfoodList();
+    g.updateWeights(foodList);
+
+
+    // Game loop
+>>>>>>> Stashed changes
     while (window.isOpen()) {
         Event event;
         while (window.pollEvent(event)) {
@@ -521,10 +557,36 @@ int Game_Play(RenderWindow& window, int level) {
         
 >>>>>>> df484b6ffb1d6458f126ea2e8cf430d76e25f1d6
         player.movement();
+<<<<<<< Updated upstream
         myghost.movement(player, g);
 
         
         auto& foodList = tileRenderer.getfoodList();
+=======
+        if (level == 0)
+        {
+            myghost.movement(player, g, 0);
+            myghost1.movement(player, g, 0);
+            myghost2.movement(player, g, 1);
+            myghost3.movement(player, g, 2);
+        }
+        else if(level==1)
+        {
+            myghost.movement(player, g, 0);
+            myghost1.movement(player, g, 1);
+            myghost2.movement(player, g, 1);
+            myghost3.movement(player, g, 2);
+
+        }else 
+        {
+            myghost.movement(player, g, 1);
+            myghost1.movement(player, g, 2);
+            myghost2.movement(player, g, 1);
+            myghost3.movement(player, g, 2);
+
+        }
+        
+>>>>>>> Stashed changes
         for (auto it = foodList.begin(); it != foodList.end(); ) {
             if (player.pacsprite.getGlobalBounds().intersects((*it)->getBounds())) {
                 it = foodList.erase(it);
