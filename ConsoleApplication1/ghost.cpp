@@ -102,6 +102,7 @@ void ghost::movement(pacman& player, Graph& g) {
             }
         }
         else if (isFrozen) {
+            
             ghostSprite.move(0, 0);
             speed = 0.0f;
 			cout << counttime << endl;

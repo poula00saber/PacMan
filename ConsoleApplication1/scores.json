@@ -1,9 +1,5 @@
 [
     {
-        "Value": 126,
-        "userName": "yousab"
-    },
-    {
         "Value": 91,
         "userName": "yousab"
     },
@@ -38,5 +34,9 @@
     {
         "Value": 37,
         "userName": "sameh"
+    },
+    {
+        "Value": 50,
+        "userName": "sa"
     }
 ]
