@@ -721,8 +721,6 @@ int Game_Play(RenderWindow& window, int level, string& name, SoundManager& sound
             cout << "winner\n";
             return meungameplay(window, true, level, player.score.userName, player.score.value);
         }
-
-
     }
 }
 
