@@ -20,10 +20,9 @@ public:
     int moveCounter;
     vector<int> path;
     bool isVisible = 1;
-    bool isFrozen = 0;
-    int homeId = 11* Graph::COLS + 20;
+    bool isFrozen;
+    int homeId = 11* Graph::COLS + 19;
     Clock freezeClock;
-    bool freezeStarts = 0;
 
 public:
     int status;
@@ -32,6 +31,7 @@ public:
     int frame;
     float speed;
     Graph g;
+    int counttime;
 
     bool vulnerable;
     float vulnerableDuration = 6.0f;

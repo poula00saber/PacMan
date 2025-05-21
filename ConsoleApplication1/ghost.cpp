@@ -16,6 +16,8 @@ ghost::ghost(int x,int y) {
     status = -1;
     moveCounter = 0;
     vulnerable = false;
+    counttime = 0;
+    isFrozen = 0;
 
 }
 
@@ -38,18 +40,17 @@ void ghost::movement(pacman& player, Graph& g) {
     int ghostNodeId = ghostI * Graph::COLS + ghostJ;
     int pacmanNodeId = pacmanI * Graph::COLS + pacmanJ;
     if (checkCollision(player)) {
-        if (vulnerable) {
-            isDying = 1;
-            path = g.bfs(ghostNodeId, homeId);
-            moveCounter = 20;  // Force path recalculation immediately
-           // std::cout << "Ghost is dying. Current node: " << ghostNodeId << ", Target node: " << homeId << std::endl<<"PacManNode: "<<pacmanNodeId;
-
-        }
-        else {
-            ghost::isVisible = false;
-            player.pacsprite.setTexture(player.pacDeath);
-            player.isDying = 1;
-        }
+            if (vulnerable) {
+                isDying = 1;
+                path = g.bfs(ghostNodeId, homeId);
+                moveCounter = 20;
+            }
+            else {
+                ghost::isVisible = false;
+                player.pacsprite.setTexture(player.pacDeath);
+                player.isDying = 1;
+            }
+        
     }   
 
     // get char current pos
@@ -80,40 +81,40 @@ void ghost::movement(pacman& player, Graph& g) {
                 }
             }
             targetNodelId = farthestNode;
+            path = g.bfs(ghostNodeId, targetNodelId);
+            moveCounter = 0;
         }
-        else if (isDying)
-        {
-            targetNodelId=homeId;
-			cout << "ghostId: " << ghostNodeId << " homeId: " << homeId << endl;
-			speed = 5.0f;
-            if (ghostNodeId == homeId)
-            {
-               // ghostSprite.setPosition(g.NODESIZE * 11, g.NODESIZE * 18);
-				isFrozen = 1;
+        else if (isDying) {
+            targetNodelId = homeId;
+            speed = 1.0f;
+            if (ghostNodeId == homeId) {
+                isFrozen = 1;
                 isDying = 0;
                 freezeClock.restart();
-                //speed = 0.0f;   
             }
+            path = g.bfs(ghostNodeId, targetNodelId);
+            moveCounter = 0;
         }
-
-        else if(isFrozen)
-        {
-            if (freezeClock.getElapsedTime().asSeconds() >= 5.0f) {
-            
-                speed = 1.0f;
-				isFrozen = 0;
-                vulnerable = 0;
+        else if (isFrozen) {
+            ghostSprite.move(0, 0);
+            if (freezeClock.getElapsedTime().asSeconds() >= 1.0f) {
+                counttime++;
+                freezeClock.restart();
             }
-            /*else {
-                return;  
-            }*/
-
+            if (counttime>10)
+            {
+                speed = 1.0f;
+                isFrozen = 0;
+                vulnerable = 0;
+                counttime = 0;
+            }
         }
         else {
             targetNodelId = pacmanNodeId;
+            path = g.bfs(ghostNodeId, targetNodelId);
+            moveCounter = 0;
         }
-        path = g.bfs(ghostNodeId, targetNodelId);
-        moveCounter = 0;
+        
     }
 
     // a valid path with at lEAST one node
