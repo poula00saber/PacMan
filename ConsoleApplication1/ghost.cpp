@@ -4,21 +4,22 @@
 bool ghost::isVulnerable() {
     return vulnerable;
 }
-ghost::ghost(int x,int y) {
+ghost::ghost(int x, int y, string photo) {
     ghostWeakShape.loadFromFile("Assets/images/GhostBody32.png");
-    ghostTex.loadFromFile("Assets/images/enemy_spritethis.png");
+    ghostEyes.loadFromFile("Assets/images/GhostEyes32.png");
+
+    ghostTex.loadFromFile(photo);
     ghostSprite.setTexture(ghostTex);
-    ghostSprite.setTextureRect(IntRect(0, 0, 30, 30));
+    ghostSprite.setTextureRect(IntRect(0, 0, 32, 30));
     ghostSprite.setScale(1.5, 1.5);
-    ghostSprite.setPosition(g.NODESIZE*x, g.NODESIZE*y);
+    ghostSprite.setPosition(g.NODESIZE * x, g.NODESIZE * y);
     frame = 0;
-    speed = 1.0f;  
+    speed = 1.0f;
     status = -1;
     moveCounter = 0;
     vulnerable = false;
-    counttime = 0;
     isFrozen = 0;
-
+    counttime = 0;
 }
 
 void ghost::setVulnerable() {
@@ -44,6 +45,7 @@ void ghost::movement(pacman& player, Graph& g) {
                 isDying = 1;
                 path = g.bfs(ghostNodeId, homeId);
                 moveCounter = 20;
+                ghostSprite.setTexture(ghostEyes);
             }
             else {
                 ghost::isVisible = false;
@@ -91,6 +93,7 @@ void ghost::movement(pacman& player, Graph& g) {
                 isFrozen = 1;
                 isDying = 0;
                 freezeClock.restart();
+                ghostSprite.setTexture(ghostTex);
             }
             path = g.bfs(ghostNodeId, targetNodelId);
             moveCounter = 0;
