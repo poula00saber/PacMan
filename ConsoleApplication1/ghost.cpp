@@ -59,7 +59,7 @@ void ghost::movement(pacman& player, Graph& g) {
    
     // positions to node indices(adj list)
    
-    if (vulnerable && vulnerableClock.getElapsedTime().asSeconds() > 10.0f) {
+    if (vulnerable && vulnerableClock.getElapsedTime().asSeconds() > 10.0f && !isDying) {
         vulnerable = false;
         ghostSprite.setTexture(ghostTex); 
     }
@@ -94,13 +94,18 @@ void ghost::movement(pacman& player, Graph& g) {
                 isDying = 0;
                 freezeClock.restart();
                 ghostSprite.setTexture(ghostTex);
+				path.clear();
             }
-            path = g.bfs(ghostNodeId, targetNodelId);
-            moveCounter = 0;
+            else {
+                path = g.bfs(ghostNodeId, targetNodelId);
+                moveCounter = 0;
+            }
         }
         else if (isFrozen) {
             ghostSprite.move(0, 0);
-            if (freezeClock.getElapsedTime().asSeconds() >= 1.0f) {
+            speed = 0.0f;
+			cout << counttime << endl;
+            if (freezeClock.getElapsedTime().asSeconds() >= 0.5f) {
                 counttime++;
                 freezeClock.restart();
             }
@@ -153,25 +158,25 @@ void ghost::movement(pacman& player, Graph& g) {
         if (status == 0 && (g.pacmanMatrix[ghostI][ghostJ + 1] != 0 || (ghostSprite.getPosition().x != Graph::nodesInfo[ghostI * Graph::COLS + ghostJ].XstartPoint && ghostSprite.getPosition().y == Graph::nodesInfo[ghostI * Graph::COLS + ghostJ].YstartPoint && g.pacmanMatrix[ghostI][ghostJ + 1] == 0))) {  // Right
             frame++;
             int frameIndex = frame % 2;
-            ghostSprite.setTextureRect(IntRect(frameIndex * 30, 0, 30, 30));
+            ghostSprite.setTextureRect(IntRect(frameIndex * 32, 0, 32, 30));
             ghostSprite.move(speed, 0);
         }
         else if (status == 1 && (g.pacmanMatrix[ghostI][ghostJ - 1] != 0 || (ghostSprite.getPosition().x != Graph::nodesInfo[ghostI * Graph::COLS + ghostJ].XstartPoint && ghostSprite.getPosition().y == Graph::nodesInfo[ghostI * Graph::COLS + ghostJ].YstartPoint && g.pacmanMatrix[ghostI][ghostJ - 1] == 0))) {  // Left
             frame++;
             int frameIndex = frame % 2;
-            ghostSprite.setTextureRect(IntRect((frameIndex + 6) * 30, 0, 30, 30));
+            ghostSprite.setTextureRect(IntRect((frameIndex + 2) * 32, 0, 32, 30));
             ghostSprite.move(-speed, 0);
         }
         else if (status == 2 && (g.pacmanMatrix[ghostI - 1][ghostJ] != 0 || (ghostSprite.getPosition().x == Graph::nodesInfo[ghostI * Graph::COLS + ghostJ].XstartPoint && ghostSprite.getPosition().y != Graph::nodesInfo[ghostI * Graph::COLS + ghostJ].YstartPoint && g.pacmanMatrix[ghostI - 1][ghostJ] == 0))) {  // Up
             frame++;
             int frameIndex = frame % 2;
-            ghostSprite.setTextureRect(IntRect((frameIndex + 4) * 30, 0, 30, 30));
+            ghostSprite.setTextureRect(IntRect((frameIndex + 4) * 32, 0, 32, 30));
             ghostSprite.move(0, -speed);
         }
         else if (status == 3 && (g.pacmanMatrix[ghostI + 1][ghostJ] != 0 || (ghostSprite.getPosition().x == Graph::nodesInfo[ghostI * Graph::COLS + ghostJ].XstartPoint && ghostSprite.getPosition().y != Graph::nodesInfo[ghostI * Graph::COLS + ghostJ].YstartPoint && g.pacmanMatrix[ghostI + 1][ghostJ] == 0))) {  // Down
             frame++;
             int frameIndex = frame % 2;
-            ghostSprite.setTextureRect(IntRect((frameIndex + 2) * 30, 0, 30, 30));
+            ghostSprite.setTextureRect(IntRect((frameIndex + 6) * 32, 0, 32, 30));
             ghostSprite.move(0, speed);
         }
         else {
