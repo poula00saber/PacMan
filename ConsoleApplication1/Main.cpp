@@ -58,7 +58,6 @@ int instruction(RenderWindow& window);
 int Game_Play(RenderWindow& window, int level, string& name, SoundManager& soundManagerr);
 void drawMenu(RenderWindow& window, Menu& menu, Sprite& bg);
 void handleEvents(RenderWindow& window, Menu& menu, int& pagenum);
-void numphoto_checkMouseHover(RenderWindow& window, RectangleShape numplay[], int& selectedOption);
 void select_checkMouseHover(RenderWindow& window, Sprite difficulty[], int numphoto, int& selectedOption);
 int SelectDifficulty(RenderWindow& window, string& name);
 int score_player(RenderWindow& window);
@@ -226,23 +225,6 @@ void drawMenu(RenderWindow& window, Menu& menu, Sprite& bg)
     window.display();
 }
 
-void numphoto_checkMouseHover(RenderWindow& window, RectangleShape numplay[], int& selectedOption)
-{
-    bool check = 0;
-    for (int i = 0; i < 6; i++)
-    {
-        if (numplay[i].getGlobalBounds().contains(window.mapPixelToCoords(Mouse::getPosition(window))))
-        {
-            selectedOption = i;
-            check = 1;
-        }
-    }
-    if (check == 0)
-    {
-        selectedOption = -1;
-    }
-
-}
 
 int Design(RenderWindow& window)
 {
