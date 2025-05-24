@@ -250,44 +250,6 @@ int Design(RenderWindow& window)
     background.loadFromFile("Assets/images/Designers.jpg");
     Sprite bg;
     bg.setTexture(background);
-    Font font;
-    font.loadFromFile("Assets/font/Prison Tattoo.ttf");
-    Text t[8];
-    for (int i = 0; i < 8; i++)
-    {
-        t[i].setFont(font);
-        t[i].setCharacterSize(70);
-        t[i].setFillColor(Color::White);
-        t[i].setPosition(520, (920));
-    }
-    t[0].setString("Taha Mustafa Abdel Fattah");
-    t[1].setString("\t  Reham Maher Roshdy");
-    t[2].setString("  Yousab Ashraf Makram");
-    t[3].setString("Mohamed Sameh El-Sayed");
-    t[4].setString("Asmaa Walid Sayed Moawad");
-    t[5].setString("\tYoussef Khaled Hussein");
-    t[6].setString("\tRana Mohamad Fattouh ");
-    t[7].setString("It was developed by them");
-
-
-    RectangleShape Photo[6];
-
-    Photo[0].setPosition(70, 210.f);
-    Photo[1].setPosition(380.f, 210.f);
-    Photo[2].setPosition(690.f, 210.f);
-    Photo[3].setPosition(1000.f, 210.f);
-    Photo[4].setPosition(1310, 210.f);
-    Photo[5].setPosition(1630.f, 210.f);
-    for (int i = 0; i < 6; i++)
-    {
-        Photo[i].setSize(Vector2f(230, 660));
-        Photo[i].setFillColor(Color::Green);
-    }
-
-
-    int numphoto = -1;
-    int selectedOption = -1;
-    int checkphoto = -1;
     while (window.isOpen())
     {
         Event event;
@@ -297,47 +259,13 @@ int Design(RenderWindow& window)
             {
                 window.close();
             }
-            if (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape)
+            if (event.key.code == Keyboard::Escape)
             {
                 return 1000;
             }
         }
-        if (event.type == Event::MouseMoved)
-        {
-            numphoto_checkMouseHover(window, Photo, selectedOption);
-        }
-        if (event.type == Event::MouseMoved)
-        {
-            for (int i = 0; i < 6; i++)
-            {
-                if (Photo[i].getGlobalBounds().contains(window.mapPixelToCoords(Mouse::getPosition(window))))
-                {
-                    checkphoto = i;
-                    break;
-                }
-            }
-        }
-        if (checkphoto == selectedOption)
-        {
-            numphoto = checkphoto;
-        }
-        else
-        {
-            numphoto = -1;
-        }
-
-
         window.clear();
         window.draw(bg);
-        if (numphoto == -1)
-        {
-            window.draw(t[7]);
-        }
-        else
-        {
-            window.draw(t[numphoto]);
-        }
-
         window.display();
     }
 }
