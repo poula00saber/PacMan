@@ -34,7 +34,7 @@ public:
     int counttime;
 
     bool vulnerable;
-    float vulnerableDuration = 6.0f;
+    float vulnerableDuration = 10.0f;
     Clock vulnerableClock;
 
     int countRemainingFood(const vector<unique_ptr<Food>>& foodList);

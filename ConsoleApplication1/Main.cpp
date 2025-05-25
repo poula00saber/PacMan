@@ -58,6 +58,7 @@ int instruction(RenderWindow& window);
 int Game_Play(RenderWindow& window, int level, string& name, SoundManager& soundManagerr);
 void drawMenu(RenderWindow& window, Menu& menu, Sprite& bg);
 void handleEvents(RenderWindow& window, Menu& menu, int& pagenum);
+void numphoto_checkMouseHover(RenderWindow& window, RectangleShape numplay[], int& selectedOption);
 void select_checkMouseHover(RenderWindow& window, Sprite difficulty[], int numphoto, int& selectedOption);
 int SelectDifficulty(RenderWindow& window, string& name);
 int score_player(RenderWindow& window);
@@ -225,6 +226,23 @@ void drawMenu(RenderWindow& window, Menu& menu, Sprite& bg)
     window.display();
 }
 
+void numphoto_checkMouseHover(RenderWindow& window, RectangleShape numplay[], int& selectedOption)
+{
+    bool check = 0;
+    for (int i = 0; i < 6; i++)
+    {
+        if (numplay[i].getGlobalBounds().contains(window.mapPixelToCoords(Mouse::getPosition(window))))
+        {
+            selectedOption = i;
+            check = 1;
+        }
+    }
+    if (check == 0)
+    {
+        selectedOption = -1;
+    }
+
+}
 
 int Design(RenderWindow& window)
 {
@@ -509,7 +527,7 @@ int Game_Play(RenderWindow& window, int level, string& name, SoundManager& sound
     ghost myghost3(22, 11, "Assets/images/orange.png");
 
 
-
+    bool checksound = 0;
 
 
     Clock clock;
@@ -589,6 +607,8 @@ int Game_Play(RenderWindow& window, int level, string& name, SoundManager& sound
                     soundManagerr.sound[4].setLoop(true);
                     soundManagerr.sound[4].play();
                     soundManagerr.sound[5].stop();
+                    checksound = 1;
+                    myghost.vulnerableClock.restart();
                 }
                 player.score.value += (*it)->getValueScore();
                 it = foodList.erase(it);
@@ -622,14 +642,18 @@ int Game_Play(RenderWindow& window, int level, string& name, SoundManager& sound
         window.draw(t);
         window.display();
 
-        if (myghost.vulnerable && myghost.vulnerableClock.getElapsedTime().asSeconds() > myghost.vulnerableDuration) {
+        if (myghost.vulnerableClock.getElapsedTime().asSeconds() > myghost.vulnerableDuration && checksound) {
             soundManagerr.sound[4].stop();
+            soundManagerr.sound[5].stop();
+            soundManagerr.sound[5].setLoop(true);
             soundManagerr.sound[5].play();
+            checksound = 0;
         }
 
         if (checkstart) {
 
             Sleep(4300);
+            soundManagerr.sound[5].stop();
             soundManagerr.sound[5].setLoop(true);
             soundManagerr.sound[5].play();
             checkstart = 0;
@@ -638,6 +662,7 @@ int Game_Play(RenderWindow& window, int level, string& name, SoundManager& sound
 
         if (player.isDying && !DeathSoundBool) {
             soundManagerr.sound[5].stop();
+            soundManagerr.sound[6].stop();
             soundManagerr.sound[6].play();
             DeathSoundBool = 1;
         }
